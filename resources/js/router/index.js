@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Home from "../Pages/Home.vue";
+import Login from "../Pages/Auth/Login.vue";
+import Register from "../Pages/Auth/Register.vue";
 
 const routes = [
     {
@@ -10,6 +12,26 @@ const routes = [
             middleware: ["auth"],
         },
     },
+
+    {
+        name:"login",
+        path:"/auth/login",
+        component:Login,
+        meta:{
+            middleware:"guest",
+            title:`Login`
+        }
+    },
+
+    {
+        name:"register",
+        path:"/auth/register",
+        component:Register,
+        meta:{
+            middleware:"guest",
+            title:`Register`
+        }
+    }
 
 ];
 
