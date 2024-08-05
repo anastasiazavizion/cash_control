@@ -1,9 +1,11 @@
 import { createStore } from 'vuex';
 import auth from './auth.js';
+import category from './category.js';
 import createPersistedState from "vuex-persistedstate";
 const store = createStore({
     modules: {
-        auth
+        auth,
+        category,
     },
     plugins:[
         createPersistedState()

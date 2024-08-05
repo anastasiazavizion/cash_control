@@ -21,7 +21,7 @@ class Category extends Model
 
     public function icon() :BelongsTo
     {
-        return $this->belongsTo(CategoryIcon::class);
+        return $this->belongsTo(CategoryIcon::class, 'category_icon_id');
 
     }
 }
