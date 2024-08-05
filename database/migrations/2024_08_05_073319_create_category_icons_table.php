@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('category_icons', function (Blueprint $table) {
             $table->id();
+            $table->text('icon');
             $table->string('name');
-            $table->string('thumbnail')->nullable();
-            $table->unsignedInteger('parent_category_id')->nullable();
+            $table->string('color')->default('#000');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('category_icons');
     }
 };

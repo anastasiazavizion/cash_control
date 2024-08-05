@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);*/
-        $this->call([PaymentTypesSeeder::class]);
+        $this->call([PaymentTypesSeeder::class, CategoryIconsSeeder::class]);
     }
 }
