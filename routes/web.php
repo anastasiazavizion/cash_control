@@ -6,6 +6,9 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentTypeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CurrencyController;
 
 Route::get('/', function () {
     return view('app');
@@ -21,6 +24,10 @@ Route::post('/auth/{provider}/callback', [SocialAuthController::class, 'handlePr
 
 
 Route::resource('category', CategoryController::class);
+Route::resource('payment', PaymentController::class);
+
+Route::get('paymentType', PaymentTypeController::class)->name('paymentType');
+Route::get('currency', CurrencyController::class)->name('currency');
 
 /*Route::post('/auth/github/callback', [SocialAuthController::class, 'handleProviderCallback']);*/
 
