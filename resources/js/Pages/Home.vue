@@ -4,6 +4,9 @@ import * as HeroIcons from '@heroicons/vue/24/solid'
 import {useStore} from "vuex";
 import {onMounted, ref} from "vue";
 
+import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
+
+
 const icons = {
     BeakerIcon,
     BellIcon
@@ -22,9 +25,7 @@ onMounted(async () => {
     categories.value = store.getters['category/categories'];
 
     await store.dispatch('paymentType/getPaymentTypes');
-
     paymentTypes.value = store.getters['paymentType/paymentTypes'];
-
 
     await store.dispatch('currency/getCurrencies');
 
@@ -141,6 +142,8 @@ import { CheckIcon } from '@heroicons/vue/20/solid'
 </script>
 
 <template>
+
+    <ExchangeRate/>
 
 
     <Dialog :open="isOpen" @close="setIsOpen" class="relative z-50">

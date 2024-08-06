@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ExchangeRateController;
 
 Route::get('/', function () {
     return view('app');
@@ -29,7 +30,7 @@ Route::resource('payment', PaymentController::class);
 Route::get('paymentType', PaymentTypeController::class)->name('paymentType');
 Route::get('currency', CurrencyController::class)->name('currency');
 
-/*Route::post('/auth/github/callback', [SocialAuthController::class, 'handleProviderCallback']);*/
+Route::get('exchangeRate', ExchangeRateController::class)->name('exchangeRate');
 
 
 Route::get('{any}', function () {
