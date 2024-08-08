@@ -4,6 +4,7 @@ const state = {
     currencies: [],
     payments: [],
     total: 0,
+    totalSum: 0,
     paymentsByCategory: [],
 };
 
@@ -11,6 +12,7 @@ const getters = {
     currencies: state => state.currencies,
     payments: state => state.payments,
     total: state => state.total,
+    totalSum: state => state.totalSum,
     paymentsByCategory: state => state.paymentsByCategory,
 };
 
@@ -24,6 +26,10 @@ const mutations = {
 
     setTotal (state, value) {
         state.total = value;
+    },
+
+    setTotalSum (state, value) {
+        state.totalSum = value;
     },
     setPaymentsByCategory (state, value) {
         state.paymentsByCategory = value;
@@ -48,6 +54,7 @@ const actions = {
             const response = await axios.get('payment',{params:payload});
             commit('setPayments', response.data.summaries);
             commit('setTotal', response.data.total);
+            commit('setTotalSum', response.data.totalSum);
             commit('setPaymentsByCategory', response.data.categories);
 
         } catch (error) {

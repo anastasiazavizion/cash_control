@@ -17,7 +17,6 @@ class PaymentController extends Controller
         $data = $request->all();
         $payment_type_id = $data['payment_type_id'];
 
-
         $summaries = Payment::with('currency')
             ->select('payment_currency_id', DB::raw('SUM(amount) as total_amount'))
             ->where('payment_type_id',$payment_type_id)
@@ -31,18 +30,14 @@ class PaymentController extends Controller
             ->groupBy('category_id')
             ->get();
 
-        $total = Payment::all()->sum('amount');
+        $total = Payment::where('payment_type_id',$payment_type_id)->sum('amount');
 
-        return response()->json(['summaries'=>$summaries, 'total'=>$total, 'categories'=>$categories], 200);
+        $totalSum = Payment::selectRaw('SUM(CASE WHEN payment_type_id = 1 THEN amount ELSE 0 END) as positive_sum')
+            ->selectRaw('SUM(CASE WHEN payment_type_id = 2 THEN amount * -1 ELSE 0 END) as negative_sum')
+            ->first();
+        $totalSum = $totalSum->positive_sum + $totalSum->negative_sum;
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json(['summaries'=>$summaries, 'total'=>$total, 'totalSum' => $totalSum, 'categories'=>$categories], 200);
     }
 
     /**
@@ -56,22 +51,6 @@ class PaymentController extends Controller
         }
 
         return response()->json('Error', 500);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

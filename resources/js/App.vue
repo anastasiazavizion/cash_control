@@ -114,7 +114,7 @@ function setActiveManu(href){
 
 
 
-    <div class="container mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="container mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-4">
         <router-view></router-view>
     </div>
 
