@@ -1,22 +1,30 @@
 <script setup>
-import { BeakerIcon, BellIcon, PlusCircleIcon } from '@heroicons/vue/24/solid'
 import * as HeroIcons from '@heroicons/vue/24/solid'
+import {PlusCircleIcon, CheckIcon}  from '@heroicons/vue/24/solid'
 import {useStore} from "vuex";
-import {onMounted, ref} from "vue";
-
-import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
-
-
-const icons = {
-    BeakerIcon,
-    BellIcon
-}
+import {computed, onMounted, reactive, ref} from "vue";
 
 const store = useStore();
 
 const categories = ref([]);
 const paymentTypes = ref([]);
 const currencies = ref([]);
+const summaries = ref([]);
+const total = ref(0);
+const loaded = ref(false);
+const activeCategory = ref(null);
+
+const paymentsByCategory = ref([]);
+
+async function getPaymentsByTypeId(id) {
+    paymentsByCategory.length = 0;
+    loaded.value = false;
+    await store.dispatch('payment/getPayments', {'payment_type_id': id});
+    summaries.value = store.getters['payment/payments'];
+    total.value = store.getters['payment/total'];
+    paymentsByCategory.value = await store.getters['payment/paymentsByCategory'];
+    loaded.value = true;
+}
 
 onMounted(async () => {
 
@@ -27,9 +35,10 @@ onMounted(async () => {
     await store.dispatch('paymentType/getPaymentTypes');
     paymentTypes.value = store.getters['paymentType/paymentTypes'];
 
-    await store.dispatch('currency/getCurrencies');
 
+    await store.dispatch('currency/getCurrencies');
     currencies.value = store.getters['currency/currencies'];
+
 
     paymentTypes.value = paymentTypes.value.map((item, index)=>{
         return {
@@ -38,31 +47,13 @@ onMounted(async () => {
         }
     })
 
+    const defaultPaymentTypeId = paymentTypes.value[0].id;
+
+    await getPaymentsByTypeId(defaultPaymentTypeId);
+
+    loaded.value = true;
+
 })
-
-
-
-import {
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    DialogDescription,
-} from '@headlessui/vue'
-
-const isOpen = ref(false)
-
-function setIsOpen(value) {
-    isOpen.value = value
-}
-
-
-
-function openAddPaymentModal(paymentTypeId){
-    console.log(paymentTypeId);
-
-    setIsOpen(true);
-
-}
 
 const paymentForm = ref({
     amount:0,
@@ -73,7 +64,26 @@ const paymentForm = ref({
     payment_currency_id:1,
 })
 
-const activeCategory = ref(null);
+/*function setIsOpen(value) {
+    isOpen.value = value;
+    if(!value){
+        paymentForm.value.amount = 0;
+        paymentForm.value.category_id = null;
+        paymentForm.value.payment_date = null;
+        paymentForm.value.description = null;
+        paymentForm.value.payment_type_id = 1;
+        paymentForm.value.payment_currency_id = 1;
+    }
+}*/
+
+const openDialog = ref(false);
+
+function openAddPaymentModal(paymentTypeId){
+    console.log(paymentTypeId);
+    openDialog.value = true;
+
+}
+
 
 
 function setCategory(categoryId){
@@ -94,18 +104,24 @@ function savePayment(){
 function formatDate(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
     const day = String(date.getDate()).padStart(2, '0');
-    return `${month}/${day}`;
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
 }
 
+
 const today = new Date();
-const yesterday = new Date();
+const yesterday = new Date(today);
 yesterday.setDate(today.getDate() - 1);
-const twoDaysAgo = new Date();
+const twoDaysAgo = new Date(today);
 twoDaysAgo.setDate(today.getDate() - 2);
 
 const todayDate = formatDate(today);
 const yesterdayDate = formatDate(yesterday);
 const twoDaysAgoDate = formatDate(twoDaysAgo);
+
+paymentForm.value.payment_date = todayDate;
+
+console.log(paymentForm.value.payment_date );
 
 const defaultDates = [
     {'date':todayDate, label:'today'},
@@ -114,17 +130,16 @@ const defaultDates = [
 ];
 
 
-function setActivePaymentType(id){
-
+async function setActivePaymentType(id) {
     paymentForm.value.payment_type_id = id;
-
-    paymentTypes.value = paymentTypes.value.map((item, index)=>{
+    paymentTypes.value = paymentTypes.value.map((item, index) => {
         return {
             ...item,
-            is_active : item.id === id
+            is_active: item.id === id
         }
     })
 
+    await getPaymentsByTypeId(id);
 }
 
 
@@ -132,124 +147,123 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 
-import {
-    RadioGroup,
-    RadioGroupLabel,
-    RadioGroupOption,
-} from '@headlessui/vue'
-import { CheckIcon } from '@heroicons/vue/20/solid'
+import { CurrencyDollarIcon} from '@heroicons/vue/20/solid'
+import PrimaryButton from "../Components/PrimaryButton.vue";
+
+
+import PaymentsByCategoryChart from "./Payment/PaymentsByCategoryChart.vue";
+import {Dialog,DialogPanel, DialogTitle, RadioGroup, RadioGroupOption} from "@headlessui/vue";
+import FormRow from "../Components/FormRow.vue";
+
+const datepicker = ref(null);
+
+function checkActiveDate(date){
+
+    console.log('checkActiveDate');
+    console.log(date);
+    return paymentForm.value.payment_date === date;
+}
+
+import moment from 'moment';
+function customFormatter(date){
+    return date;
+    return moment(date).format('DD/MM/yyyy');
+}
 
 </script>
 
 <template>
 
-    <ExchangeRate/>
 
-
-    <Dialog :open="isOpen" @close="setIsOpen" class="relative z-50">
+    <Dialog :open="openDialog" @close="openDialog = false" class="relative z-50 dialog">
         <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
-
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
-            <DialogPanel class="w-full max-w-sm rounded bg-white">
-
-                <DialogTitle>Deactivate account</DialogTitle>
-                <DialogDescription>
-                    This will permanently deactivate your account
-                </DialogDescription>
+            <DialogPanel class="w-full max-w-xl rounded bg-white dialog-panel">
+                <DialogTitle class="dialog-title">Add new transaction</DialogTitle>
 
                 <form @submit.prevent="savePayment">
-                    <div>
-                        Amount:
-                        <input required type="text" v-model="paymentForm.amount">
-                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-2">
+                            <input  class="text-center border-b-2 border-t-0 border-r-0 border-l-0 border-gray-300  focus:outline-none p-2" required type="text" v-model="paymentForm.amount">
+                        </div>
 
-                    <div>
-                        Currency:
+                        <div class="col-span-1">
 
-
-                        <RadioGroup v-model="paymentForm.payment_currency_id">
-                            <RadioGroupLabel>Currency</RadioGroupLabel>
-
-                            <RadioGroupOption
-                                :key="currency.id"
-                                v-for="currency in currencies"
-                                :value="currency.id"
-                                as="template"
-                                v-slot="{ active, checked }"
-                            >
-                                <div
-                                    :class="{
-          'bg-blue-500 text-white': active,
-          'bg-white text-black': !active,
-        }"
-
-                                    class="flex gap-4"
+                            <RadioGroup v-model="paymentForm.payment_currency_id">
+                                <RadioGroupOption
+                                    class="radio-group-option"
+                                    :key="currency.id"
+                                    v-for="currency in currencies"
+                                    :value="currency.id"
+                                    as="template"
+                                    v-slot="{ active, checked }"
                                 >
-                                    {{currency.name}}
-                                    <CheckIcon class="h-4" v-show="checked" />
-                                </div>
-                            </RadioGroupOption>
-
-
-                        </RadioGroup>
-
-
-
+                                    <div class="flex gap-4"
+                                    >
+                                        {{currency.name}}
+                                        <CheckIcon class="h-4" v-show="checked" />
+                                    </div>
+                                </RadioGroupOption>
+                            </RadioGroup>
+                        </div>
 
                     </div>
 
-                    <div>
-                        Description:
-                        <textarea v-model="paymentForm.description"></textarea>
-                    </div>
+                    <FormRow name="description" label="Description">
+                        <textarea id="description" name="description" placeholder="Description" class="w-full rounded-md border-slate-300" v-model="paymentForm.description"></textarea>
+                    </FormRow>
 
-                    <div>
-                        Date:
 
-                        <div class="flex gap-4">
+                    <FormRow name="date" label="Date">
+                        <div class="flex gap-4 justify-between  items-center">
                             <div @click="setPaymentDate(date.date)" :key="date.date" v-for="date in defaultDates"
-                                 class="cursor-pointer bg-green-500 text-white ">
+                                 class="cursor-pointer text-center p-1"  :class="{'active-date': customFormatter(paymentForm.payment_date) === date.date}">
                                 <div>
                                     {{date.date}}
-                                    <div>
+                                    <div class="text-sm">
                                         {{date.label}}
                                     </div>
                                 </div>
                             </div>
-
-                            <VueDatePicker :enable-time-picker="false" v-model="paymentForm.payment_date"></VueDatePicker>
-
-
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-4">
-                        <div @click="setCategory(category.id)" :key="category.id" v-for="category in categories">
-                            <div :style="{ backgroundColor: activeCategory === category.id ? category.icon.color : ''}"
-                                 :class="{'text-white' : activeCategory === category.id}"
-                                 class="p-2" @click="activeCategory = category.id">
-                                {{category.name}}
-                                <component :style="{'backgroundColor':category.icon.color}"  :is="HeroIcons[category.icon.icon]"
-                                           class="h-8 cursor-pointer text-white rounded-md"></component>
+                            <div>
+                                <VueDatePicker  dark class="w-4 small-datepicker" :enable-time-picker="false" v-model="paymentForm.payment_date"></VueDatePicker>
                             </div>
                         </div>
-                    </div>
+                    </FormRow>
+
+
+                    <FormRow name="categories" label="Categories">
+                        <div class="flex flex-row flex-wrap gap-4">
+                            <div @click="setCategory(category.id)" :key="category.id" v-for="category in categories">
+                                <div :style="{ backgroundColor: activeCategory === category.id ? category.icon.color : ''}"
+                                     :class="{'text-white' : activeCategory === category.id}"
+                                     class="p-2 rounded-md cursor-pointer" @click="activeCategory = category.id">
+                                    {{category.name}}
+                                    <component :style="{'backgroundColor':category.icon.color}"
+                                               :is="HeroIcons[category.icon.icon]"
+                                               class="h-8 cursor-pointer text-white rounded-md">
+                                    </component>
+                                </div>
+                            </div>
+                        </div>
+                    </FormRow>
+
 
                     <div>
-                        <button type="submit">ADD</button>
+                        <PrimaryButton type="submit">ADD</PrimaryButton>
                     </div>
 
                 </form>
 
-
-                <button @click="setIsOpen(false)">Cancel</button>
-                <!-- ... -->
             </DialogPanel>
-
-
         </div>
     </Dialog>
 
+
+
+    <div>
+        <CurrencyDollarIcon class="h-8"/> Total {{total}}
+    </div>
 
     <div class="flex gap-4 ">
         <div :class="{'underline': paymentType.is_active}"  class="cursor-pointer bg-gray-500 text-white" @click="setActivePaymentType(paymentType.id)" :key="paymentType.id" v-for="paymentType in paymentTypes">
@@ -257,22 +271,26 @@ import { CheckIcon } from '@heroicons/vue/20/solid'
         </div>
     </div>
 
-
-
     <div>
-        <div :key="paymentType.id" v-for="paymentType in paymentTypes">
-
-          <div  v-if="paymentType.is_active">
-
-
-              <PlusCircleIcon @click="openAddPaymentModal(paymentType.id)"  class="h-12 cursor-pointer"></PlusCircleIcon>
-
-          </div>
+        <PaymentsByCategoryChart :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
+    </div>
 
 
+    <div v-if="summaries.length > 0" class="bg-gray-600 p-4 text-white">
+        <div :key="summary.payment_currency_id" v-for="summary in summaries">
+            <div>{{summary.currency.name}}</div>
+            <div>{{summary.total_amount}}</div>
         </div>
     </div>
 
 
+    <div>
+        <div :key="paymentType.id" v-for="paymentType in paymentTypes">
+          <div  v-if="paymentType.is_active">
+              <PlusCircleIcon @click="openAddPaymentModal(paymentType.id)"  class="h-12 cursor-pointer"></PlusCircleIcon>
+          </div>
+        </div>
 
+
+    </div>
 </template>

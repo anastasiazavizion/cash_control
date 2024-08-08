@@ -7,8 +7,43 @@
 }
 
 .tableWithBorder tr, .tableWithBorder td, .tableWithBorder th{
-    @apply border border-slate-300 p-1;
+    @apply /*border border-slate-300*/ p-1;
 }
 .tableWithBorder th{
     @apply text-slate-500;
+}
+.tableWithBorder tr{
+    @apply border-b-2;
+}
+
+svg{
+    @apply inline;
+}
+
+.custom-radio .v-label {
+    font-size: 0.75rem !important; /* Smaller text size with higher priority */
+}
+
+.custom-radio .v-radio {
+    padding: 4px !important; /* Smaller padding with higher priority */
+}
+
+.dialog-panel{
+    @apply p-4;
+}
+
+.dialog-title{
+    @apply text-center font-bold text-xl;
+}
+
+.radio-group-option{
+    @apply cursor-pointer;
+}
+
+.small-datepicker .dp__input_wrap{
+    @apply w-48;
+}
+
+.active-date{
+    @apply bg-emerald-500 text-white rounded-md;
 }

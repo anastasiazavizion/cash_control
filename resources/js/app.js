@@ -5,7 +5,6 @@ import { createApp } from 'vue'
 import router from "./router/index.js";
 import store from "./store/index.js";
 
-
 import UniversalSocialauth from 'universal-social-auth';
 
 // Define options for UniversalSocialauth
@@ -30,7 +29,6 @@ const options = {
 
 // Initialize UniversalSocialauth
 const Oauth = new UniversalSocialauth(axios, options);
-
 
 const app = createApp(App)
 .use(router)

@@ -17,10 +17,7 @@ class ExchangeRateController extends Controller
         $apiUrl = "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11";
 
         try {
-            // Make a GET request to the OpenWeather API
             $response = $client->get($apiUrl);
-
-            // Get the response body as an array
             $data = json_decode($response->getBody(), true);
 
             return response()->json($data, 200);

@@ -25,6 +25,11 @@ class Payment extends Model
         return $this->belongsTo(PaymentType::class);
     }
 
+    public function currency(): BelongsTo
+    {
+        return $this->belongsTo(PaymentCurrency::class, 'payment_currency_id');
+    }
+
     public function paymentDate() : Attribute
     {
         return Attribute::make(
