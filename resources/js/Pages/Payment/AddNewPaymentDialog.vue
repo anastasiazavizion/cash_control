@@ -33,7 +33,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['save-payment'])
+const emits = defineEmits(['save-payment', 'close-dialog'])
 function savePayment(){
     emits('save-payment', props.paymentForm);
 }
@@ -85,7 +85,7 @@ function setCategory(categoryId){
 </script>
 
 <template>
-    <Dialog :open="openDialog" @close="openDialog = false" class="relative z-50 dialog">
+    <Dialog :open="openDialog" @close="emits('close-dialog')" class="relative z-50 dialog">
         <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
             <DialogPanel class="w-full max-w-xl rounded bg-white dialog-panel">

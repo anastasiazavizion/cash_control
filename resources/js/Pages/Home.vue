@@ -70,16 +70,14 @@ const paymentForm = ref({
 
 const openDialog = ref(false);
 
-function openAddPaymentModal(paymentTypeId){
-    console.log(paymentTypeId);
-    openDialog.value = true;
-
+function closeDialog(){
+    openDialog.value = false;
 }
 
 function savePayment(form){
    store.dispatch('payment/savePayment', form);
     getPaymentsByTypeId(form.payment_type_id);
-   openDialog.value = false;
+    closeDialog();
 }
 
 async function setActivePaymentType(id) {
@@ -92,10 +90,11 @@ async function setActivePaymentType(id) {
     })
     await getPaymentsByTypeId(id);
 }
+
 </script>
 
 <template>
-    <AddNewPaymentDialog @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
+    <AddNewPaymentDialog @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
 
     <div>
         <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon> Total {{totalSum}}
@@ -121,7 +120,7 @@ async function setActivePaymentType(id) {
 
             <div>
                <TabPanel :key="paymentType.id" v-for="paymentType in paymentTypes">
-                    <PlusIcon @click="openAddPaymentModal(paymentType.id)"  class="h-8 cursor-pointer bg-black text-white rounded-md"></PlusIcon>
+                    <PlusIcon @click="openDialog = true"  class="h-8 cursor-pointer bg-black text-white rounded-md"></PlusIcon>
 
                    <div>
                        <PaymentsByCategoryChart  :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
@@ -133,11 +132,6 @@ async function setActivePaymentType(id) {
             </div>
         </TabPanels>
     </TabGroup>
-
-
-<!--    <div>
-        <CurrencyDollarIcon class="h-8"/> Total {{total}}
-    </div>-->
 
 
     <!--
