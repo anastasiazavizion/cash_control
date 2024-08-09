@@ -3,11 +3,21 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../Pages/Home.vue";
 import Login from "../Pages/Auth/Login.vue";
 import Register from "../Pages/Auth/Register.vue";
+import Settings from "../Pages/Account/Settings.vue";
 
 const routes = [
     {
         path: '/home',
         component: Home,
+        meta: {
+            middleware: ["auth"],
+        },
+    },
+
+    {
+        path: '/account/settings',
+        name: 'settings',
+        component: Settings,
         meta: {
             middleware: ["auth"],
         },

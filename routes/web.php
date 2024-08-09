@@ -10,6 +10,8 @@ use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ExchangeRateController;
+use App\Http\Controllers\UserSettingController;
+
 
 Route::get('/', function () {
     return view('app');
@@ -29,6 +31,8 @@ Route::resource('payment', PaymentController::class);
 
 Route::get('paymentType', PaymentTypeController::class)->name('paymentType');
 Route::get('currency', CurrencyController::class)->name('currency');
+
+Route::resource('user_setting', UserSettingController::class);
 
 Route::get('exchangeRate', ExchangeRateController::class)->name('exchangeRate');
 

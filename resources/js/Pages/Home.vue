@@ -4,8 +4,10 @@ import {onMounted, ref} from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
 import PaymentsByCategoryChart from "./Payment/PaymentsByCategoryChart.vue";
+import PaymentsByCategory from "./Payment/PaymentsByCategory.vue";
 import AddNewPaymentDialog from "./Payment/AddNewPaymentDialog.vue";
 import {PlusIcon, CurrencyDollarIcon}  from '@heroicons/vue/24/solid'
+import {Doughnut} from "vue-chartjs";
 
 const store = useStore();
 
@@ -99,7 +101,7 @@ async function setActivePaymentType(id) {
         <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon> Total {{totalSum}}
     </div>
     <TabGroup>
-        <TabList>
+        <TabList class="text-center grid grid-cols-2">
             <Tab class="mr-4" @click="setActivePaymentType(paymentType.id)" :key="paymentType.id" v-for="paymentType in paymentTypes">
                 <button
                     :class="[
@@ -122,7 +124,10 @@ async function setActivePaymentType(id) {
                     <PlusIcon @click="openAddPaymentModal(paymentType.id)"  class="h-8 cursor-pointer bg-black text-white rounded-md"></PlusIcon>
 
                    <div>
-                       <PaymentsByCategoryChart :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
+                       <PaymentsByCategoryChart  :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
+                   </div>
+                   <div class="mt-4">
+                       <PaymentsByCategory v-if="loaded" :payments="paymentsByCategory"></PaymentsByCategory>
                    </div>
                 </TabPanel>
             </div>

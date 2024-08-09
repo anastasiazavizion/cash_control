@@ -24,18 +24,22 @@ class PaymentController extends Controller
             ->get();
 
 
-        $categories = Payment::with('category.icon')
-            ->select('category_id', DB::raw('SUM(amount) as total_amount'))
-            ->where('payment_type_id',$payment_type_id)
-            ->groupBy('category_id')
-            ->get();
-
-        $total = Payment::where('payment_type_id',$payment_type_id)->sum('amount');
-
         $totalSum = Payment::selectRaw('SUM(CASE WHEN payment_type_id = 1 THEN amount ELSE 0 END) as positive_sum')
             ->selectRaw('SUM(CASE WHEN payment_type_id = 2 THEN amount * -1 ELSE 0 END) as negative_sum')
             ->first();
         $totalSum = $totalSum->positive_sum + $totalSum->negative_sum;
+
+
+        $total = Payment::where('payment_type_id',$payment_type_id)->sum('amount');
+
+        $categories = Payment::with('category.icon')
+            ->select('category_id', DB::raw('SUM(amount) as total_amount'))
+            ->where('payment_type_id',$payment_type_id)
+            ->groupBy('category_id')
+            ->get()->each(function ($category) use ($total){
+                $category->percent = round($category->total_amount * 100 / $total, 2);
+            });
+
 
         return response()->json(['summaries'=>$summaries, 'total'=>$total, 'totalSum' => $totalSum, 'categories'=>$categories], 200);
     }

@@ -92,5 +92,5 @@ ChartJS.register({
 </script>
 
 <template>
-    <Doughnut :options="chartOptions" v-if="isEmpty" :style="{height : dataForChart ? '300px' : '0px'}" :data="dataForChart" />
+    <Doughnut  class="text-center" :options="chartOptions" v-if="isEmpty" :style="{height : dataForChart ? '300px' : '0px'}" :data="dataForChart" />
 </template>
