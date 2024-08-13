@@ -24,7 +24,7 @@ class SocialAuthController extends Controller
         $user = User::firstOrCreate(
             ['email'=>$userSocial->getEmail()],
             [
-          'name' => $userSocial->getName() ?? $userSocial->getNickname(),
+            'name' => $userSocial->getName() ?? $userSocial->getNickname(),
             'email' => $userSocial->getEmail(),
             'password'      => Hash::make(Str::random(6)),
             'provider_name' => $provider,
@@ -34,6 +34,8 @@ class SocialAuthController extends Controller
         ]);
 
         Auth::login($user);
+
+
         return response()->json(['message' => 'OK'], 200);
     }
 }

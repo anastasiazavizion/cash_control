@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enum\Role;
+use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,10 +13,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
 use Laravel\Sanctum\HasApiTokens;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Permission\Traits\HasRoles;
 
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -78,5 +83,10 @@ class User extends Authenticatable
     {
         return $query->payments()->where('payment_date', date('Y-d-m'));
 
+    }
+
+    public function scopeAdmin(Builder $query)
+    {
+        return $query->role(Role::ADMIN->value);
     }
 }

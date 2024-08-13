@@ -22,13 +22,5 @@ class UserSeeder extends Seeder
             User::factory()->admin()->create();
         }
 
-        User::factory(3)->moderator()->create();
-
-        $product = Product::first();
-
-        User::factory(500)->create()->each(function ($user) use ($product){
-            $user->wishes()->attach($product->id);
-        });
-
     }
 }

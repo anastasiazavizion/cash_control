@@ -3,8 +3,6 @@ namespace Database\Seeders;
 
 use App\Enum\Permissions\Account;
 use App\Enum\Permissions\Category;
-use App\Enum\Permissions\Product;
-use App\Enum\Permissions\Order;
 use App\Enum\Permissions\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -23,8 +21,6 @@ class PermissionsAndRolesSeeder extends Seeder
         $permissions = [
             ...Account::values(),
             ...Category::values(),
-            ...Product::values(),
-            ...Order::values(),
             ...User::values(),
         ];
 
@@ -35,11 +31,6 @@ class PermissionsAndRolesSeeder extends Seeder
         if(!Role::findByParam(['name'=>RoleEnum::CUSTOMER->value])){
             (Role::create(['name'=>RoleEnum::CUSTOMER->value]))
                 ->givePermissionTo([...Account::values()]);
-        }
-
-        if(!Role::findByParam(['name'=>RoleEnum::MODERATOR->value])){
-            (Role::create(['name'=>RoleEnum::MODERATOR->value]))
-                ->givePermissionTo([...Product::values(),...Category::values()]);
         }
 
         if(!Role::findByParam(['name'=>RoleEnum::ADMIN->value])){

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enum\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,7 +26,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->firstName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -40,5 +42,24 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email' => 'admin@gmail.com',
+        ])->afterCreating(function (User $user){
+            $user->syncRoles([Role::ADMIN->value]);
+        });
+    }
+
+
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user){
+            if(!$user->hasAnyRole(...Role::values())){
+                $user->assignRole(Role::CUSTOMER->value);
+            }
+        });
     }
 }
