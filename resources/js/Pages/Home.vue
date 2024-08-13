@@ -27,6 +27,7 @@ async function getPaymentsByTypeId(id) {
     total.value = store.getters['payment/total'];
     totalSum.value = store.getters['payment/totalSum'];
     paymentsByCategory.value = await store.getters['payment/paymentsByCategory'];
+
     loaded.value = true;
 }
 
@@ -145,20 +146,10 @@ onMounted(()=>{
                        <PaymentsByCategoryChart  :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
                    </div>
                    <div class="mt-4">
-                       <PaymentsByCategory v-if="loaded" :payments="paymentsByCategory"></PaymentsByCategory>
+                       <PaymentsByCategory v-if="loaded" :categories="paymentsByCategory"></PaymentsByCategory>
                    </div>
                 </TabPanel>
             </div>
         </TabPanels>
     </TabGroup>
-
-
-    <!--
-        <div v-if="summaries.length > 0" class="bg-gray-600 p-4 text-white">
-            <div :key="summary.payment_currency_id" v-for="summary in summaries">
-                <div>{{summary.currency.name}}</div>
-                <div>{{summary.total_amount}}</div>
-            </div>
-        </div>
-    -->
 </template>

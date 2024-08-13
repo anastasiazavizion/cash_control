@@ -42,8 +42,12 @@ class PaymentController extends Controller
             ->groupBy('category_id')
             ->get()->each(function ($category) use ($total){
                 $category->percent = round($category->total_amount * 100 / $total, 2);
-            });
 
+                $category->payments = Payment::whereHas('category', function ($q) use ($category) {
+                    $q->where('id', $category->category_id);
+                })->get();
+
+            });
 
         return response()->json(['summaries'=>$summaries, 'total'=>$total, 'totalSum' => $totalSum, 'categories'=>$categories], 200);
     }
