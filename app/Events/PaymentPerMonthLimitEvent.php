@@ -46,6 +46,6 @@ class PaymentPerMonthLimitEvent implements ShouldBroadcast
         $monthTotalSum = $this->user->payments()
             ->where('payment_date', 'LIKE', date('Y-').'%'.date('-m'))
             ->sum('amount');
-        return $monthTotalSum > $this->monthLimit;
+        return $this->monthLimit > 0 && ($monthTotalSum > $this->monthLimit);
     }
 }

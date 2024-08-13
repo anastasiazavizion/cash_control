@@ -44,6 +44,6 @@ class PaymentPerDayLimitEvent implements ShouldBroadcast
    public function broadcastWhen(): bool
     {
         $todayTotalSum = $this->user->payments()->where('payment_date', date('Y-m-d'))->sum('amount');
-        return $todayTotalSum > $this->dayLimit;
+        return $this->dayLimit > 0 && ($todayTotalSum > $this->dayLimit);
     }
 }
