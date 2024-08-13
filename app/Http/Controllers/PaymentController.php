@@ -74,8 +74,9 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
+        return response()->json('Removed', 200);
     }
 }

@@ -40,14 +40,18 @@ const actions = {
     async savePayment({ commit }, payload) {
         try {
             const response = await axios.post('payment',payload);
-
-
         } catch (error) {
-
-
-
         }
     },
+
+    async removePayment({ commit }, payload) {
+        try {
+            const response = await axios.delete('payment/'+payload);
+        } catch (error) {
+        }
+    },
+
+
 
     async getPayments({ commit }, payload) {
         try {

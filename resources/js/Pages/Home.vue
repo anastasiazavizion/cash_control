@@ -31,6 +31,8 @@ async function getPaymentsByTypeId(id) {
     loaded.value = true;
 }
 
+const activePaymentType = ref(0);
+
 onMounted(async () => {
     await store.dispatch('category/getCategories');
 
@@ -50,6 +52,7 @@ onMounted(async () => {
     })
 
     const defaultPaymentTypeId = paymentTypes.value[0].id;
+    activePaymentType.value = defaultPaymentTypeId;
 
     await getPaymentsByTypeId(defaultPaymentTypeId);
 
@@ -86,6 +89,8 @@ async function setActivePaymentType(id) {
             is_active: item.id === id
         }
     })
+
+    activePaymentType.value = id;
     await getPaymentsByTypeId(id);
 }
 
@@ -111,6 +116,20 @@ onMounted(()=>{
         });
 
 })
+
+async function removePayment(id) {
+    loaded.value = false;
+    await store.dispatch('payment/removePayment', id)
+    await getPaymentsByTypeId(activePaymentType.value);
+    loaded.value = true;
+}
+
+const visibleCategories = ref([]);
+
+function saveVisibleCategories(categories){
+    visibleCategories.value = categories;
+}
+
 </script>
 
 <template>
@@ -143,10 +162,15 @@ onMounted(()=>{
                     <PlusIcon @click="openDialog = true"  class="h-8 cursor-pointer bg-black text-white rounded-md"></PlusIcon>
 
                    <div>
-                       <PaymentsByCategoryChart  :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
+                       <PaymentsByCategoryChart :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
                    </div>
                    <div class="mt-4">
-                       <PaymentsByCategory v-if="loaded" :categories="paymentsByCategory"></PaymentsByCategory>
+                       <PaymentsByCategory @save-visible-categories="saveVisibleCategories"
+                                           @remove-payment="removePayment" v-if="loaded"
+                                           :categories="paymentsByCategory"
+                                           :visibleCategories="visibleCategories"
+                       >
+                       </PaymentsByCategory>
                    </div>
                 </TabPanel>
             </div>
