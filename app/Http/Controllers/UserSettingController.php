@@ -14,7 +14,7 @@ class UserSettingController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Auth::user()->settings);
     }
 
     /**
@@ -34,7 +34,6 @@ class UserSettingController extends Controller
             ['user_id' => Auth::id()],
             $request->validated()
         );
-
         return response()->json('Success');
     }
 

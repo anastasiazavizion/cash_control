@@ -30,7 +30,11 @@ const options = {
 // Initialize UniversalSocialauth
 const Oauth = new UniversalSocialauth(axios, options);
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 const app = createApp(App)
+.use(Toast)
 .use(router)
 .use(store)
 

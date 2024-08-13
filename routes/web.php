@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
@@ -13,9 +15,11 @@ use App\Http\Controllers\ExchangeRateController;
 use App\Http\Controllers\UserSettingController;
 
 
+
 Route::get('/', function () {
     return view('app');
 });
+
 
 Route::get('/user', [UserController::class, 'user'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,6 +65,18 @@ class User extends Authenticatable
     public function settings(): HasOne
     {
         return $this->hasOne(UserSetting::class, 'user_id');
+
+    }
+
+    public function payments() : HasMany
+    {
+        return $this->hasMany(Payment::class);
+
+    }
+
+    public function scopeTodayPayments(Builder $query)
+    {
+        return $query->payments()->where('payment_date', date('Y-d-m'));
 
     }
 }

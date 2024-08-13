@@ -1,13 +1,12 @@
 <script setup>
 import {useStore} from "vuex";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
 import PaymentsByCategoryChart from "./Payment/PaymentsByCategoryChart.vue";
 import PaymentsByCategory from "./Payment/PaymentsByCategory.vue";
 import AddNewPaymentDialog from "./Payment/AddNewPaymentDialog.vue";
 import {PlusIcon, CurrencyDollarIcon}  from '@heroicons/vue/24/solid'
-import {Doughnut} from "vue-chartjs";
 
 const store = useStore();
 
@@ -39,10 +38,8 @@ onMounted(async () => {
     await store.dispatch('paymentType/getPaymentTypes');
     paymentTypes.value = store.getters['paymentType/paymentTypes'];
 
-
     await store.dispatch('currency/getCurrencies');
     currencies.value = store.getters['currency/currencies'];
-
 
     paymentTypes.value = paymentTypes.value.map((item, index)=>{
         return {
@@ -91,6 +88,28 @@ async function setActivePaymentType(id) {
     await getPaymentsByTypeId(id);
 }
 
+import { useToast } from "vue-toastification";
+
+const user =  computed(()=>{
+    return store.getters['auth/user']
+})
+
+
+onMounted(()=>{
+
+    window.Echo.private('payment_per_day_limit_channel_'+user.value.id)
+        .listen('PaymentPerDayLimitEvent', (e) => {
+            const toast = useToast();
+            toast("You have exceeded your daily limit " + e.limit + "!");
+        });
+
+    window.Echo.private('payment_per_month_limit_channel_'+user.value.id)
+        .listen('PaymentPerMonthLimitEvent', (e) => {
+            const toast = useToast();
+            toast("You have exceeded your month limit " + e.limit + "!");
+        });
+
+})
 </script>
 
 <template>

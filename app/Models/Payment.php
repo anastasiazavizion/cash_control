@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
+use App\Observers\PaymentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 
+#[ObservedBy([PaymentObserver::class])]
 class Payment extends Model
 {
     use HasFactory;
 
     protected $fillable = ['payment_type_id','payment_currency_id','amount', 'category_id', 'payment_date',
-        'description'];
+        'description', 'user_id'];
+
+
 
     public function category(): BelongsTo
     {
@@ -33,8 +38,14 @@ class Payment extends Model
     public function paymentDate() : Attribute
     {
         return Attribute::make(
-            set: fn ($value) => date('Y-m-d',strtotime($value))
+            set: fn ($value) => Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d'),
         );
+    }
+
+    public function user() : BelongsTo
+    {
+        return $this->belongsTo(User::class);
 
     }
+
 }

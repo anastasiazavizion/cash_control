@@ -2,5 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    \Khill\FontAwesome\Laravel\FontAwesomeServiceProvider::class
+    App\Providers\TelescopeServiceProvider::class,
+    Khill\FontAwesome\Laravel\FontAwesomeServiceProvider::class,
 ];

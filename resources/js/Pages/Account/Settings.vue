@@ -1,7 +1,7 @@
 <script setup>
 
 import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/24/solid'
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import axios from "axios";
 
@@ -10,10 +10,16 @@ const form = ref({
     month_limit:null,
 });
 
+onMounted(async () => {
+    const response = await axios.get('/user_setting');
+
+    form.value.day_limit = response.data.day_limit;
+    form.value.month_limit = response.data.month_limit;
+
+})
+
 async function saveSettings() {
     const response = await axios.post('/user_setting', form.value);
-
-
 }
 
 

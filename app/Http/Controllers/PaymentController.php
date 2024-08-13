@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PaymentPerDayLimitEvent;
+use App\Events\PaymentPerMonthLimitEvent;
 use App\Http\Requests\PaymentRequest;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
@@ -49,11 +53,9 @@ class PaymentController extends Controller
      */
     public function store(PaymentRequest $request)
     {
-
-        if(Payment::create($request->validated())){
+        if(Auth::user()->payments()->save(Payment::make($request->validated()))){
             return response()->json(['message'=>'Payment was added'], 200);
         }
-
         return response()->json('Error', 500);
     }
 
