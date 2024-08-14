@@ -46,7 +46,7 @@ const actions = {
 
     async removePayment({ commit }, payload) {
         try {
-            const response = await axios.delete('payment/'+payload);
+            const respnse = await axios.delete('payment/'+payload);
         } catch (error) {
         }
     },

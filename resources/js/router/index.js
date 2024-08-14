@@ -41,7 +41,12 @@ const routes = [
             middleware:"guest",
             title:`Register`
         }
-    }
+    },
+
+    {
+        path:"/:notFound(.*)",
+        redirect:'/home'
+    },
 
 ];
 

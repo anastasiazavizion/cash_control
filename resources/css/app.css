@@ -47,3 +47,9 @@ svg{
 .active-date{
     @apply bg-emerald-500 text-white rounded-md;
 }
+
+
+a.router-link-active{
+
+}
+
