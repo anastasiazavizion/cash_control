@@ -26,32 +26,41 @@ const authenticated = computed(()=>{
 import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/vue/24/outline'
 
-const navigation = ref([
-    { name: 'Home', href: '/home', current: true, visible:authenticated.value },
-    { name: 'Login', href: '/auth/login', current: false, visible:!authenticated.value },
-    { name: 'Register', href: '/auth/register', current: false, visible:!authenticated.value},
-]);
+const navigation = computed(()=>{
+    return [
+        { name: 'Home', href: '/home', current: true, visible:authenticated.value },
+        { name: 'Logout', href: '/logout', current: false, visible:authenticated.value},
+        { name: 'Login', href: '/auth/login', current: false, visible:!authenticated.value },
+        { name: 'Register', href: '/auth/register', current: false, visible:!authenticated.value},
+    ];
+})
 
-
-
-const visibleNavigation = ref(navigation.value.filter((item)=> item.visible));
+const visibleNavigation = computed(()=>{
+    return navigation.value.filter((item)=> item.visible);
+})
 
 function setActiveMenu(href){
-    visibleNavigation.value.forEach(item => {
-        item.current = false;
-    });
-    let navItem = visibleNavigation.value.find((item)=> item.href === href)
-    navItem.current = true;
+
+    if(href === '/logout'){
+        logout();
+    }else{
+        visibleNavigation.value.forEach(item => {
+            item.current = false;
+        });
+        let navItem = visibleNavigation.value.find((item)=> item.href === href)
+        navItem.current = true;
+    }
 }
 
+const logoSrc = computed(()=>{
+    return import.meta.env.VITE_APP_URL + '/storage/logo/logo.png'
+})
 
 </script>
 
 <template>
-
-
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
@@ -66,7 +75,7 @@ function setActiveMenu(href){
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex flex-shrink-0 items-center">
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+                        <img class="h-8 w-auto cursor-pointer" :src="logoSrc" alt="Your Company" />
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
@@ -91,17 +100,15 @@ function setActiveMenu(href){
                             <span class="">{{user.name}}</span>
                             <MenuButton class="text-white relative items-center gap-4  flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <span class="absolute -inset-1.5" />
-                                <img class="h-8 w-8 rounded-full" :src="user.avatar" alt="" />
+                                <img v-if="user.avatar" class="h-8 w-8 rounded-full" :src="user.avatar" alt="" />
+                                <UserIcon class="h-6 w-6 rounded-full" v-else/>
                             </MenuButton>
                         </div>
                         <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                             <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-
                                 <MenuItem>
                                     <router-link  :class="['block px-4 py-2 text-sm text-gray-700']"  class="rounded-md px-3 py-2 text-sm font-medium" aria-current="page" to="/account/settings">Settings</router-link>
                                 </MenuItem>
-
-
                             </MenuItems>
                         </transition>
                     </Menu>
@@ -116,11 +123,8 @@ function setActiveMenu(href){
         </DisclosurePanel>
     </Disclosure>
 
-
-
     <div class="container mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-4">
         <router-view></router-view>
     </div>
-
 
 </template>
