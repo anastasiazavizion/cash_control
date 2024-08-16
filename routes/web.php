@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ExchangeRateController;
 use App\Http\Controllers\UserSettingController;
 
@@ -39,6 +40,8 @@ Route::get('currency', CurrencyController::class)->name('currency');
 Route::resource('user_setting', UserSettingController::class);
 
 Route::get('exchangeRate', ExchangeRateController::class)->name('exchangeRate');
+
+Route::get('report', ReportController::class)->name('report')->middleware('auth:sanctum');
 
 
 Route::get('{any}', function () {

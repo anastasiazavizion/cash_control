@@ -130,10 +130,30 @@ function saveVisibleCategories(categories){
     visibleCategories.value = categories;
 }
 
+function makeReport(){
+
+    axios.get('/report', {
+        responseType: 'blob' // Set the response type to blob to handle binary data
+    }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'report.pdf'); // Define the file name
+        document.body.appendChild(link);
+        link.click();
+        link.remove(); // Clean up the DOM after download
+    }).catch(error => {
+        console.error('There was an error downloading the file!', error);
+    });
+
+}
+
 </script>
 
 <template>
     <AddNewPaymentDialog @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
+
+    <button @click="makeReport">Make report </button>
 
     <div>
         <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon> Total {{totalSum}}

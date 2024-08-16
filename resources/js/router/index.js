@@ -43,10 +43,10 @@ const routes = [
         }
     },
 
-/*    {
+    {
         path:"/:notFound(.*)",
         redirect:'/home'
-    },*/
+    },
 
 ];
 
