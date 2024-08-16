@@ -89,7 +89,6 @@ async function setActivePaymentType(id) {
             is_active: item.id === id
         }
     })
-
     activePaymentType.value = id;
     await getPaymentsByTypeId(id);
 }
@@ -100,9 +99,7 @@ const user =  computed(()=>{
     return store.getters['auth/user']
 })
 
-
 onMounted(()=>{
-
     window.Echo.private('payment_per_day_limit_channel_'+user.value.id)
         .listen('PaymentPerDayLimitEvent', (e) => {
             const toast = useToast();
@@ -114,7 +111,6 @@ onMounted(()=>{
             const toast = useToast();
             toast("You have exceeded your month limit " + e.limit + "!");
         });
-
 })
 
 async function removePayment(id) {
@@ -130,30 +126,31 @@ function saveVisibleCategories(categories){
     visibleCategories.value = categories;
 }
 
-function makeReport(){
-
+function makeReport(type){
     axios.get('/report', {
-        responseType: 'blob' // Set the response type to blob to handle binary data
+        params:{type:type},
+        responseType: 'blob'
     }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'report.pdf'); // Define the file name
+        link.setAttribute('download', 'report.'+type);
         document.body.appendChild(link);
         link.click();
         link.remove(); // Clean up the DOM after download
     }).catch(error => {
         console.error('There was an error downloading the file!', error);
     });
-
 }
+
 
 </script>
 
 <template>
     <AddNewPaymentDialog @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
 
-    <button @click="makeReport">Make report </button>
+    <button @click="makeReport('pdf')">Make report pdf </button>
+    <button @click="makeReport('xlsx')">Make report xlsx </button>
 
     <div>
         <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon> Total {{totalSum}}
