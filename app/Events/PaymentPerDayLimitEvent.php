@@ -21,7 +21,7 @@ class PaymentPerDayLimitEvent implements ShouldBroadcast
     public function __construct(public User $user)
     {
         $settings = $this->user->settings;
-        $this->dayLimit = $settings ? $settings->day_limit : 0;
+        $this->dayLimit = $settings->day_limit ?? 0;
     }
 
     /**

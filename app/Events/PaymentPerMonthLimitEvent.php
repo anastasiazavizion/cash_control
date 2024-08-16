@@ -21,7 +21,7 @@ class PaymentPerMonthLimitEvent implements ShouldBroadcast
     public function __construct(public User $user)
     {
         $settings = $this->user->settings;
-        $this->monthLimit = $settings ? $settings->month_limit : 0;
+        $this->monthLimit = $settings->month_limit ?? 0;
     }
 
     /**
