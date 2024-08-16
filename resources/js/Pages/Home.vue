@@ -28,6 +28,9 @@ async function getPaymentsByTypeId(id) {
     totalSum.value = store.getters['payment/totalSum'];
     paymentsByCategory.value = await store.getters['payment/paymentsByCategory'];
 
+    console.log(paymentsByCategory.value);
+
+
     loaded.value = true;
 }
 

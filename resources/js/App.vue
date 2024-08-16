@@ -25,8 +25,17 @@ const authenticated = computed(()=>{
 
 import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
 
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/vue/24/outline'
+import {
+    Dialog, DialogPanel,
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems
+} from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon, UserIcon,  InformationCircleIcon} from '@heroicons/vue/24/outline'
 
 const navigation = computed(()=>{
     return [
@@ -58,9 +67,22 @@ const logoSrc = computed(()=>{
     return import.meta.env.VITE_APP_URL + '/storage/logo/logo.png'
 })
 
+const showRate = ref(false);
+
 </script>
 
 <template>
+    <Dialog :open="showRate" @close="showRate = false" class="relative z-50 dialog">
+        <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
+            <DialogPanel class="w-full max-w-xl rounded bg-white dialog-panel">
+                <ExchangeRate></ExchangeRate>
+            </DialogPanel>
+        </div>
+    </Dialog>
+
+
+
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
@@ -93,7 +115,8 @@ const logoSrc = computed(()=>{
                     </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
+                    <ExchangeRate class="hidden sm:inline text-white"></ExchangeRate>
+                    <InformationCircleIcon @click="showRate = true" class="sm:hidden text-white h-8 cursor-pointer"></InformationCircleIcon>
                     <!-- Profile dropdown -->
                     <Menu v-if="authenticated" as="div" class="relative ml-3">
                         <div class="flex gap-4 items-center text-white \">
