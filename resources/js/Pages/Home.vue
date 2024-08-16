@@ -146,18 +146,39 @@ function makeReport(type){
     });
 }
 
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+const reportLinks = [
+    { label: 'Pdf', type:'pdf'},
+    { label: 'Excel', type:'xlsx' },
+]
 
 </script>
 
 <template>
     <AddNewPaymentDialog @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
 
-    <button @click="makeReport('pdf')">Make report pdf </button>
-    <button @click="makeReport('xlsx')">Make report xlsx </button>
+    <div class="relative mb-4">
+        <Menu>
+            <MenuButton class="inline-flex justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">Create report</MenuButton>
+            <MenuItems class="absolute left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                <MenuItem
+                    as="template"
+                    @click="makeReport(link.type)"
+                    v-for="link in reportLinks"
+                    :key="link.type"
+                    class="cursor-pointer ui-active:bg-blue-500 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black  text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm"
+                >
+                    <div>{{link.label }}</div>
+                </MenuItem>
+
+            </MenuItems>
+        </Menu>
+    </div>
 
     <div>
         <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon> Total {{totalSum}}
     </div>
+
     <TabGroup>
         <TabList class="text-center grid grid-cols-2">
             <Tab class="mr-4" @click="setActivePaymentType(paymentType.id)" :key="paymentType.id" v-for="paymentType in paymentTypes">
