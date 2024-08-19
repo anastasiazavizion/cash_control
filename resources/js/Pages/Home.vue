@@ -1,7 +1,9 @@
 <script setup>
 import {useStore} from "vuex";
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+
+import listenLimitEvents from '../hooks/listenLimitEvents.js'
 
 import PaymentsByCategoryChart from "./Payment/PaymentsByCategoryChart.vue";
 import PaymentsByCategory from "./Payment/PaymentsByCategory.vue";
@@ -96,24 +98,8 @@ async function setActivePaymentType(id) {
     await getPaymentsByTypeId(id);
 }
 
-import { useToast } from "vue-toastification";
-
-const user =  computed(()=>{
-    return store.getters['auth/user']
-})
-
 onMounted(()=>{
-    window.Echo.private('payment_per_day_limit_channel_'+user.value.id)
-        .listen('PaymentPerDayLimitEvent', (e) => {
-            const toast = useToast();
-            toast("You have exceeded your daily limit " + e.limit + "!");
-        });
-
-    window.Echo.private('payment_per_month_limit_channel_'+user.value.id)
-        .listen('PaymentPerMonthLimitEvent', (e) => {
-            const toast = useToast();
-            toast("You have exceeded your month limit " + e.limit + "!");
-        });
+    listenLimitEvents();
 })
 
 async function removePayment(id) {

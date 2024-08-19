@@ -7,7 +7,6 @@ const props = defineProps({
     paymentsByCategory:Array,
     total:Number
 })
-
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const labels = [];
@@ -36,16 +35,13 @@ const isEmpty = computed(()=>{
     return props.paymentsByCategory.length > 0;
 })
 
-
 const chartOptions =  {
     plugins: {
-        // Add custom plugin for center text
-        // Using Chart.js 3.x version
         datalabels: {
-            display: false, // Disable default datalabels if using Chart.js 2.x
+            display: false,
         },
         legend: {
-            display: false, // Hide default legend
+            display: false,
         },
         tooltip: {
             callbacks: {
