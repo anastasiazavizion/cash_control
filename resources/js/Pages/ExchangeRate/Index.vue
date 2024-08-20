@@ -4,25 +4,23 @@ import {useStore} from "vuex";
 const rates = ref([]);
 const store = useStore();
 onMounted(async () => {
-    await store.dispatch('exchangeRate/getRates');
-    rates.value = store.getters['exchangeRate/rates'];
+    async function getRates() {
+        await store.dispatch('exchangeRate/getRates');
+        rates.value = store.getters['exchangeRate/rates'];
+    }
+await getRates();
+
+ setInterval(async function () {
+     await getRates();
+ }, 3600000);
 }
 )
-
 import {CurrencyEuroIcon, CurrencyDollarIcon} from "@heroicons/vue/24/solid";
 
 </script>
-
 <template>
     <div>
         <table class="tableWithBorder text-sm">
-<!--            <thead>
-            <tr>
-                <th>Currency</th>
-                <th>Buy</th>
-                <th>Sale</th>
-            </tr>
-            </thead>-->
             <tbody>
             <tr :key="rate.ccy" v-for="rate in rates">
                 <td>
