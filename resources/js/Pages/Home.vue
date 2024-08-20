@@ -141,6 +141,7 @@ const reportLinks = [
 </script>
 
 <template>
+    <div>
     <AddNewPaymentDialog @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
 
     <div class="relative mb-4">
@@ -203,4 +204,5 @@ const reportLinks = [
             </div>
         </TabPanels>
     </TabGroup>
+    </div>
 </template>

@@ -26,7 +26,7 @@ async function saveSettings() {
 </script>
 
 <template>
-
+    <div>
     <form @submit.prevent="saveSettings" method="POST" action="#">
         <div class="space-y-12">
 
@@ -66,6 +66,7 @@ async function saveSettings() {
 
 
     </form>
+    </div>
 </template>
 
 
