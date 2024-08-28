@@ -48,7 +48,8 @@ svg{
     @apply bg-emerald-500 text-white rounded-md;
 }
 
-
-a.router-link-active{
-
+nav{
+    .router-link-active{
+        @apply underline bg-gray-900 text-white;
+    }
 }
