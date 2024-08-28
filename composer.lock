@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fdaac8ac9cc7f889dfe11423c664e33",
+    "content-hash": "5967abca28103c6385e80a04848106b3",
     "packages": [
+        {
+            "name": "ahmedsaoud31/laravel-permission-to-vuejs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahmedsaoud31/laravel-permission-to-vuejs.git",
+                "reference": "5f481d8c44b9c546804702ed3a83bb4836779787"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahmedsaoud31/laravel-permission-to-vuejs/zipball/5f481d8c44b9c546804702ed3a83bb4836779787",
+                "reference": "5f481d8c44b9c546804702ed3a83bb4836779787",
+                "shasum": ""
+            },
+            "require": {
+                "spatie/laravel-permission": ">=2.0"
+            },
+            "default-branch": true,
+            "type": "plugin",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelAndVueJS\\LaravelAndVueJSServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelAndVueJS\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ahmed Abeoelsaoud",
+                    "email": "ahmedsaoud31@gmail.com"
+                }
+            ],
+            "description": "Laravel Permission Package To Use it in VueJs",
+            "support": {
+                "issues": "https://github.com/ahmedsaoud31/laravel-permission-to-vuejs/issues",
+                "source": "https://github.com/ahmedsaoud31/laravel-permission-to-vuejs/tree/master"
+            },
+            "time": "2024-08-07T08:19:05+00:00"
+        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v3.0.0",
@@ -10581,7 +10629,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "ahmedsaoud31/laravel-permission-to-vuejs": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

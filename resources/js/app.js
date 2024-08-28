@@ -32,14 +32,14 @@ const Oauth = new UniversalSocialauth(axios, options);
 
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-
+import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 const app = createApp(App)
 .use(Toast)
 .use(router)
 .use(store)
+.use(LaravelPermissionToVueJS)
 
 app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$Oauth = Oauth;
-
 
 app.mount('#app')

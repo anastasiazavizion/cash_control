@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store/index.js";
 
 import Home from "../Pages/Home.vue";
 import Login from "../Pages/Auth/Login.vue";
@@ -32,7 +33,6 @@ const routes = [
             title:`Login`
         }
     },
-
     {
         name:"register",
         path:"/auth/register",
@@ -47,7 +47,6 @@ const routes = [
         path:"/:notFound(.*)",
         redirect:'/home'
     },
-
 ];
 
 const router =  createRouter({
@@ -56,7 +55,7 @@ const router =  createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-   /* const middleware = to.meta.middleware;
+    const middleware = to.meta.middleware;
     const permissions = window.Laravel.jsPermissions;
     const roles = permissions['roles'];
     const permission = permissions['permissions'];
@@ -81,8 +80,7 @@ router.beforeEach((to, from, next) => {
         }else{
             next({name:"login"})
         }
-    }*/
-    next()
+    }
 })
 
 export default router;

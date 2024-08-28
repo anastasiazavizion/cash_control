@@ -2,14 +2,14 @@
 import {useStore} from "vuex";
 const store = useStore();
 import {useRouter} from "vue-router";
-import {computed, onMounted, ref} from "vue";
+import {computed, ref} from "vue";
 const router = useRouter();
 
 const logout = async () => {
     try {
         const { data } = await axios.post('/logout');
-        store.dispatch('auth/logout');
-        router.push('/auth/login');
+        await store.dispatch('auth/logout');
+        await router.push('/auth/login');
     } catch (error) {
         console.error(error);
     }
@@ -80,8 +80,6 @@ const showRate = ref(false);
             </DialogPanel>
         </div>
     </Dialog>
-
-
 
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

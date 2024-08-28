@@ -13,13 +13,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
 use Laravel\Sanctum\HasApiTokens;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
+use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
 use Spatie\Permission\Traits\HasRoles;
 
 #[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, HasRoles;
-
+    use HasFactory, Notifiable, HasApiTokens, HasRoles, LaravelPermissionToVueJS;
     /**
      * The attributes that are mass assignable.
      *
