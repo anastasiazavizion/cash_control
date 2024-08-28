@@ -15,7 +15,7 @@ const mutations = {
 const actions = {
     async getRates({ commit }) {
         try {
-            const response = await axios.get('/exchangeRate');
+            const response = await axios.get(route('exchangeRate'));
             commit('setRates', response.data);
 
         } catch (error) {

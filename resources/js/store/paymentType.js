@@ -15,7 +15,7 @@ const mutations = {
 const actions = {
     async getPaymentTypes({ commit }) {
         try {
-            const response = await axios.get('/paymentType');
+            const response = await axios.get(route('paymentType'));
             commit('setPaymentTypes', response.data);
 
         } catch (error) {

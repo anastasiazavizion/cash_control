@@ -6,13 +6,8 @@ import {computed, ref} from "vue";
 const router = useRouter();
 
 const logout = async () => {
-    try {
-        const { data } = await axios.post('/logout');
-        await store.dispatch('auth/logout');
-        await router.push('/auth/login');
-    } catch (error) {
-        console.error(error);
-    }
+    await store.dispatch('auth/logout');
+    await router.push('/auth/login');
 };
 
 const user =  computed(()=>{
@@ -51,7 +46,6 @@ const visibleNavigation = computed(()=>{
 })
 
 function setActiveMenu(href){
-
     if(href === '/logout'){
         logout();
     }else{

@@ -39,28 +39,25 @@ const mutations = {
 const actions = {
     async savePayment({ commit }, payload) {
         try {
-            const response = await axios.post('payment',payload);
+            const response = await axios.post(route('payment.store'),payload);
         } catch (error) {
         }
     },
 
     async removePayment({ commit }, payload) {
         try {
-            const respnse = await axios.delete('payment/'+payload);
+            const respnse = await axios.delete(route('payment.destroy', payload));
         } catch (error) {
         }
     },
 
-
-
     async getPayments({ commit }, payload) {
         try {
-            const response = await axios.get('payment',{params:payload});
+            const response = await axios.get(route('payment.index'),{params:payload});
             commit('setPayments', response.data.summaries);
             commit('setTotal', response.data.total);
             commit('setTotalSum', response.data.totalSum);
             commit('setPaymentsByCategory', response.data.categories);
-
         } catch (error) {
 
         }

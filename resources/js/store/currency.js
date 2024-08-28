@@ -17,7 +17,7 @@ const mutations = {
 const actions = {
     async getCurrencies({ commit }) {
         try {
-            const response = await axios.get('/currency');
+            const response = await axios.get(route('currency.index'));
             commit('setCurrencies', response.data);
 
         } catch (error) {

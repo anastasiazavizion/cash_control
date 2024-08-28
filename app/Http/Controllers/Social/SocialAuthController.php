@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Social;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Facades\Hash;
 
 class SocialAuthController extends Controller
 {
@@ -20,7 +20,6 @@ class SocialAuthController extends Controller
     {
 
         $userSocial = Socialite::driver($provider)->stateless()->user();
-
         $user = User::firstOrCreate(
             ['email'=>$userSocial->getEmail()],
             [
@@ -34,8 +33,6 @@ class SocialAuthController extends Controller
         ]);
 
         Auth::login($user);
-
-
         return response()->json(['message' => 'OK'], 200);
     }
 }

@@ -11,18 +11,18 @@ import UniversalSocialauth from 'universal-social-auth';
 const options = {
     providers: {
         google: {
-            clientId: '976566120631-k6rjlsmvebqai111ih6bkr3v37rme1i3.apps.googleusercontent.com',
-            redirectUri: 'http://localhost:8097/auth/google/callback'
+            clientId: '976566120631-43ed403u1stn13kbj5gcectmko0fnr78.apps.googleusercontent.com',
+            redirectUri: 'http://localhost:8097/api/auth/google/callback'
         },
 
         github: {
             clientId: 'Ov23lijwCeMFb7HjYrYy',
-            redirectUri: 'http://localhost:8097/auth/github/callback'
+            redirectUri: 'http://localhost:8097/api/auth/github/callback'
         },
 
         facebook: {
             clientId: '1897919367389385',
-            redirectUri: 'http://localhost:8097/auth/facebook/callback'
+            redirectUri: 'http://localhost:8097/api/auth/facebook/callback'
         },
     }
 };
@@ -33,10 +33,13 @@ const Oauth = new UniversalSocialauth(axios, options);
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+
 const app = createApp(App)
 .use(Toast)
 .use(router)
 .use(store)
+.use(ZiggyVue)
 .use(LaravelPermissionToVueJS)
 
 app.config.globalProperties.$axios = axios;

@@ -22,10 +22,9 @@ class AuthController
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return response()->json(['message' => 'Logout'], 200);
     }
-
 }
