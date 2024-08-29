@@ -6,6 +6,7 @@ use App\Enum\Role;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -88,5 +89,13 @@ class User extends Authenticatable
     public function scopeAdmin(Builder $query)
     {
         return $query->role(Role::ADMIN->value);
+    }
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => strtolower($value),
+            set: fn (string $value) => strtolower($value),
+        );
     }
 }
