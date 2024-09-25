@@ -207,6 +207,16 @@ footer{
 
 }
 
+
+.tab{
+    @apply w-full rounded-lg p-4 text-base font-medium leading-5 focus:outline-none active:outline-none;
+}
+
+.active-tab{
+    @apply text-blue-700 shadow;
+}
+
+
 .custom-toast {
     background-color: $mainColor!important;
     color: white;
