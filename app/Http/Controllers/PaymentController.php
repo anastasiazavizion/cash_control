@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentByTypeRequest;
 use App\Http\Requests\PaymentRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use App\Repositories\Contracts\PaymentRepositoryContract;
@@ -30,7 +31,7 @@ class PaymentController extends Controller
 
         $categories = $this->paymentRepository->getCategoriesData($total,$payment_type_id);
 
-        return response()->json(['total'=>$total, 'categories'=>$categories], 200);
+        return response()->json(['total'=>$total, 'categories'=>CategoryResource::collection($categories)], 200);
     }
 
     /**
