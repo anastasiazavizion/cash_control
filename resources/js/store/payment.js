@@ -6,6 +6,7 @@ const state = {
     total: 0,
     totalSum: 0,
     paymentsByCategory: [],
+    errors:[],
 };
 
 const getters = {
@@ -14,6 +15,7 @@ const getters = {
     total: state => state.total,
     totalSum: state => state.totalSum,
     paymentsByCategory: state => state.paymentsByCategory,
+    errors: state => state.errors,
 };
 
 const mutations = {
@@ -28,6 +30,10 @@ const mutations = {
         state.total = value;
     },
 
+    setErrors (state, value) {
+        state.errors = value;
+    },
+
     setTotalSum (state, value) {
         state.totalSum = value;
     },
@@ -37,10 +43,14 @@ const mutations = {
 };
 
 const actions = {
-    async savePayment({ commit }, payload) {
+    async savePayment({ commit, dispatch}, payload) {
         try {
-            const response = await axios.post(route('payment.store'),payload);
+             await axios.post(route('payment.store'),payload);
+             dispatch('clearErrors');
         } catch (error) {
+            if(error.response.status === 422){
+                commit('setErrors',error.response.data.errors);
+            }
         }
     },
 
@@ -49,6 +59,10 @@ const actions = {
             const respnse = await axios.delete(route('payment.destroy', payload));
         } catch (error) {
         }
+    },
+
+    async clearErrors({ commit }) {
+        commit('setErrors', []);
     },
 
     async getPayments({ commit }, payload) {

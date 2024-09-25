@@ -57,6 +57,8 @@ const activePaymentType = ref(0);
 
 onMounted(async () => {
 
+    await store.dispatch('payment/clearErrors');
+
     await store.dispatch('category/getCategories');
 
     await store.dispatch('paymentType/getPaymentTypes');
@@ -87,10 +89,19 @@ function closeDialog(){
     openDialog.value = false;
 }
 
+
+const errors = computed(()=>{
+    return store.getters['payment/errors'];
+})
+
+
 async function savePayment(form) {
     await store.dispatch('payment/savePayment', form);
-    await getPaymentsByTypeId(form.payment_type_id);
-    closeDialog();
+
+    if(Object.keys(errors.value).length === 0){
+        await getPaymentsByTypeId(form.payment_type_id);
+        closeDialog();
+    }
 }
 
 async function setActivePaymentType(id) {
@@ -144,7 +155,7 @@ const reportLinks = [
 
 <template>
     <div>
-    <AddNewPaymentDialog @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
+    <AddNewPaymentDialog :errors="errors" @close-dialog="closeDialog" @save-payment="savePayment" :payment-form="paymentForm"  :open-dialog="openDialog"/>
 
     <div class="relative mb-4">
         <Menu>

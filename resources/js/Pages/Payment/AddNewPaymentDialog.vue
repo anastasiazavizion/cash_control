@@ -4,29 +4,25 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 import * as HeroIcons from "@heroicons/vue/24/solid/index.js";
-import {CheckIcon}  from '@heroicons/vue/24/solid'
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import FormRow from "../../Components/FormRow.vue";
 
-const currencies = ref([]);
-const categories = ref([]);
-const activeCategory = ref(null);
+const categories = computed(()=>{
+    return store.getters['category/categories'];
+});
 
+const activeCategory = ref(null);
 
 const store = useStore();
 
-
 onMounted(async () => {
     await store.dispatch('category/getCategories');
-    categories.value = store.getters['category/categories'];
-
-    await store.dispatch('currency/getCurrencies');
-    currencies.value = store.getters['currency/currencies'];
 })
 
 const props = defineProps({
     paymentForm:Object,
+    errors:Object,
     openDialog:{
         type:Boolean,
         default:false
@@ -41,7 +37,6 @@ function savePayment(){
 function setPaymentDate(date){
     props.paymentForm.payment_date = date;
 }
-
 
 function formatDate(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
@@ -72,6 +67,7 @@ const defaultDates = [
 
 import moment from 'moment';
 import PrimaryButton from "../../Components/PrimaryButton.vue";
+import Errors from "../../Components/Errors.vue";
 function customFormatter(date){
     return date;
     return moment(date).format('DD/MM/yyyy');
@@ -94,26 +90,7 @@ function setCategory(categoryId){
                     <div class="grid grid-cols-3 gap-4">
                         <div class="col-span-2">
                             <input  class="text-center border-b-2 border-t-0 border-r-0 border-l-0 border-gray-300  focus:outline-none p-2" required type="text" v-model="paymentForm.amount">
-                        </div>
-
-                        <div class="col-span-1">
-
-                            <RadioGroup v-model="paymentForm.payment_currency_id">
-                                <RadioGroupOption
-                                    class="radio-group-option"
-                                    :key="currency.id"
-                                    v-for="currency in currencies"
-                                    :value="currency.id"
-                                    as="template"
-                                    v-slot="{ active, checked }"
-                                >
-                                    <div class="flex gap-4"
-                                    >
-                                        {{currency.name}}
-                                        <CheckIcon class="h-4" v-show="checked" />
-                                    </div>
-                                </RadioGroupOption>
-                            </RadioGroup>
+                            <Errors v-if="errors" :errors="errors.amount"/>
                         </div>
 
                     </div>
@@ -155,8 +132,8 @@ function setCategory(categoryId){
                                 </div>
                             </div>
                         </div>
+                        <Errors v-if="errors" :errors="errors.category_id"/>
                     </FormRow>
-
 
                     <div>
                         <PrimaryButton type="submit">ADD</PrimaryButton>
@@ -169,7 +146,3 @@ function setCategory(categoryId){
     </Dialog>
 
 </template>
-
-<style scoped>
-
-</style>
