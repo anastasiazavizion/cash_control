@@ -3,7 +3,7 @@ import axios from 'axios';
 const state = {
     authenticated: false,
     user: {},
-    errors: null,
+    errors: [],
 };
 
 const getters = {
@@ -28,7 +28,7 @@ const actions = {
     async login({ commit, dispatch}, payload) {
         try {
             await axios.post(route('login'), payload);
-            commit('setErrors', null);
+            commit('setErrors', []);
             dispatch('getUser');
         } catch (error) {
             commit('setErrors', error.response.data.errors);
@@ -73,7 +73,7 @@ const actions = {
         }
     },
     async clearErrors({commit}) {
-        commit('setErrors', null);
+        commit('setErrors', []);
     }
 };
 

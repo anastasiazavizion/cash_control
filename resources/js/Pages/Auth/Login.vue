@@ -65,7 +65,7 @@ const errors = computed(()=>{
 })
 
 async function redirectToHome() {
-    if (!errors.value) {
+    if(Object.keys(errors.value).length === 0){
         await router.push('/home');
     }
 }
