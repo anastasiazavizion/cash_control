@@ -31,6 +31,7 @@ import {
     MenuItems
 } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon, UserIcon,  InformationCircleIcon} from '@heroicons/vue/24/outline'
+import Footer from "./Layouts/Footer.vue";
 
 const navigation = computed(()=>{
     return [
@@ -68,7 +69,7 @@ const showRate = ref(false);
             </DialogPanel>
         </div>
     </Dialog>
-    <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
+    <Disclosure as="nav" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -90,7 +91,7 @@ const showRate = ref(false);
                                 v-for="item in visibleNavigation"
                                 :key="item.name"
                             :to="item.href"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                            class="rounded-md px-3 py-2 text-sm font-medium  hover:text-white"
                             @click="navigate(item.href)"
                             >
                             {{ item.name }}
@@ -105,7 +106,7 @@ const showRate = ref(false);
                     <Menu v-if="authenticated" as="div" class="relative ml-3">
                         <div class="flex gap-4 items-center text-white \">
                             <span class="">{{user.name}}</span>
-                            <MenuButton class="text-white relative items-center gap-4  flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <MenuButton class="text-white relative items-center gap-4  flex rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <span class="absolute -inset-1.5" />
                                 <img v-if="user.avatar" class="h-8 w-8 rounded-full" :src="user.avatar" alt="" />
                                 <UserIcon class="h-6 w-6 rounded-full" v-else/>
@@ -132,4 +133,5 @@ const showRate = ref(false);
     <div class="container mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-4">
         <router-view></router-view>
     </div>
+    <Footer/>
 </template>

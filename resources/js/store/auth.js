@@ -35,7 +35,21 @@ const actions = {
         }
     },
 
-     async getUser({ commit }, payload) {
+
+    async register({ commit, dispatch}, payload) {
+        try {
+            await axios.post(route('register'), payload);
+            await dispatch('login',payload)
+            dispatch('clearErrors');
+        } catch (error) {
+            commit('setErrors',error.response.data.errors);
+        }
+    },
+
+
+
+
+    async getUser({ commit }, payload) {
         try {
             const response = await axios.get(route('user'));
             const { user} = response.data;

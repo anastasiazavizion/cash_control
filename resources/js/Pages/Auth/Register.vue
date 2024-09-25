@@ -1,12 +1,12 @@
 <script setup>
 import {useStore} from 'vuex'
-import { ref } from 'vue'
+import {computed, ref} from 'vue'
 import {useRouter} from "vue-router";
-
-import Card from '@/Components/Card.vue';
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Header from "@/Components/Header.vue";
 import Errors from "@/Components/Errors.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Label from "@/Components/Label.vue";
+import FormCard from "@/Components/FormCard.vue";
+import FormDiv from "@/Components/FormDiv.vue";
 
 const form = ref({
     name: "",
@@ -18,80 +18,49 @@ const form = ref({
     birthday:""
 });
 
-const errors = ref([]);
 const router = useRouter();
 const store = useStore();
 
+const errors = computed(()=>{
+    return store.getters['auth/errors'];
+})
+
 const register = async () => {
-    axios.post('/register', form.value)
-        .then(async function (response) {
-            await store.dispatch('auth/login');
-            const user = await store.getters['auth/user'];
-            router.push('/home');
-        })
-        .catch(function (error) {
-            if(error.response.status === 422){
-                errors.value = error.response.data.errors;
-            }
-        });
+    await store.dispatch('auth/register', form.value);
+    if(Object.keys(errors.value).length === 0){
+        await router.push('/home');
+    }
 };
 </script>
 <template>
+    <FormCard header="Register new account">
+        <form @submit.prevent="register" class="space-y-6" action="#" method="POST">
+            <FormDiv>
+                <template #label><Label name="name">Name</Label></template>
+                <input v-model="form.name" id="name" name="name" type="text"  required=""/>
+                <Errors v-if="errors"  :errors="errors.name"/>
+            </FormDiv>
 
-    <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-            <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Register new account</h2>
-        </div>
+            <FormDiv>
+                <template #label><Label name="email">Email</Label></template>
+                <input v-model="form.email" id="email" name="email" type="email" autocomplete="email" required=""/>
+                <Errors v-if="errors"  :errors="errors.email"/>
+            </FormDiv>
 
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form @submit.prevent="register" class="space-y-6" action="#" method="POST">
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
-                    </div>
-                    <div class="mt-2">
-                        <input v-model="form.name" id="name" name="name" type="text"  required="" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                        <Errors :errors="errors.name"/>
-                    </div>
-                </div>
+            <FormDiv>
+                <template #label><Label name="password">Password</Label></template>
+                <input v-model="form.password" id="password" name="password" type="password" autocomplete="current-password" required=""/>
+            </FormDiv>
 
-               <div>
-                    <div class="flex items-center justify-between">
-                        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
-                    </div>
-                    <div class="mt-2">
-                        <input v-model="form.email" id="email" name="email" type="email" autocomplete="email" required="" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                        <Errors :errors="errors.email"/>
-                    </div>
-                </div>
+            <FormDiv>
+                <template #label><Label name="password_confirmation">Confirm Password</Label></template>
+                <input v-model="form.password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required="" />
+            </FormDiv>
 
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                    </div>
-                    <div class="mt-2">
-                        <input v-model="form.password" id="password" name="password" type="password" autocomplete="current-password" required="" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                    </div>
-                </div>
-
-
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirm Password</label>
-                    </div>
-                    <div class="mt-2">
-                        <input v-model="form.password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required="" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                    </div>
-                </div>
-
-
-                <div>
-                    <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
+            <div class="text-right">
+                <PrimaryButton>Register</PrimaryButton>
+            </div>
+        </form>
+    </FormCard>
 
 </template>

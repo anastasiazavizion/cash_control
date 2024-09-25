@@ -3,9 +3,5 @@
 </script>
 
 <template>
-<h1 class="mb-2 font-bold text-lg"><slot></slot></h1>
+<h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"><slot></slot></h2>
 </template>
-
-<style scoped>
-
-</style>
