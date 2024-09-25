@@ -29,9 +29,7 @@ const paymentTypes = computed(()=>{
     });
 })
 
-const summaries = computed(()=>{
-    return store.getters['payment/payments'];
-})
+
 
 const total = computed(()=>{
     return store.getters['payment/total'];
@@ -49,7 +47,10 @@ const loaded = ref(false);
 
 async function getPaymentsByTypeId(id) {
     loaded.value = false;
-    await store.dispatch('payment/getPayments', {'payment_type_id': id});
+
+    await store.dispatch('payment/getPaymentsByType', {'payment_type_id': id});
+
+    await store.dispatch('payment/getTotalSum');
     loaded.value = true;
 }
 

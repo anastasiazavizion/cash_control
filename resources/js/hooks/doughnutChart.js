@@ -1,5 +1,6 @@
 import {ArcElement, Chart as ChartJS, Legend, Tooltip} from "chart.js";
 import {ref} from "vue";
+import priceFormat from "./priceFormat.js";
 
 export function createDoughnutChart(data, total, labelKey, dataKey, colorKey){
     ChartJS.register(ArcElement, Tooltip, Legend)
@@ -16,12 +17,10 @@ export function createDoughnutChart(data, total, labelKey, dataKey, colorKey){
 
     if(data.length){
         data.map(function (item){
-
             // Dynamically access the properties using the provided keys
-            const label = getNestedProperty(item, labelKey) + ' (' + getNestedProperty(item, dataKey) + ')';
+            const label = getNestedProperty(item, labelKey) + ' (' + priceFormat(getNestedProperty(item, dataKey)) + ')';
             const dataValue = getNestedProperty(item, dataKey);
             const backgroundColor = getNestedProperty(item, colorKey);
-
             labels.push(label);
             dataItems.push(dataValue);
             backgrounds.push(backgroundColor);
@@ -54,7 +53,7 @@ export function createDoughnutChart(data, total, labelKey, dataKey, colorKey){
             },
             // Custom plugin for center text
             centerText: {
-                text: total,
+                text: '$ '+total,
                 color: '#000',
                 font: {
                     size: 18,

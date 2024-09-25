@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 const state = {
-    currencies: [],
-    payments: [],
     total: 0,
     totalSum: 0,
     paymentsByCategory: [],
@@ -10,8 +8,6 @@ const state = {
 };
 
 const getters = {
-    currencies: state => state.currencies,
-    payments: state => state.payments,
     total: state => state.total,
     totalSum: state => state.totalSum,
     paymentsByCategory: state => state.paymentsByCategory,
@@ -19,13 +15,6 @@ const getters = {
 };
 
 const mutations = {
-    setCurrencies (state, value) {
-        state.currencies = value;
-    },
-    setPayments (state, value) {
-        state.payments = value;
-    },
-
     setTotal (state, value) {
         state.total = value;
     },
@@ -65,12 +54,19 @@ const actions = {
         commit('setErrors', []);
     },
 
-    async getPayments({ commit }, payload) {
+    async getTotalSum({ commit }) {
         try {
-            const response = await axios.get(route('payment.index'),{params:payload});
-            commit('setPayments', response.data.summaries);
+            const response = await axios.get(route('payment.totalSum'));
+            commit('setTotalSum', response.data);
+        } catch (error) {
+
+        }
+    },
+
+    async getPaymentsByType({ commit }, payload) {
+        try {
+            const response = await axios.get(route('payment.getPaymentsByType'), {params:payload});
             commit('setTotal', response.data.total);
-            commit('setTotalSum', response.data.totalSum);
             commit('setPaymentsByCategory', response.data.categories);
         } catch (error) {
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\PaymentObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,7 +46,11 @@ class Payment extends Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
 
+    public function scopeByPaymentType(Builder $query, int $typeId)
+    {
+        return $query->where('payment_type_id',$typeId);
     }
 
 }

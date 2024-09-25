@@ -2,56 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PaymentPerDayLimitEvent;
-use App\Events\PaymentPerMonthLimitEvent;
-use App\Exports\PaymentExport;
+use App\Http\Requests\PaymentByTypeRequest;
 use App\Http\Requests\PaymentRequest;
+use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
+use App\Repositories\Contracts\PaymentRepositoryContract;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
+    public function __construct(public PaymentRepositoryContract $paymentRepository)
+    {
+    }
+
+    public function getTotalSum()
+    {
+        return response()->json($this->paymentRepository->getTotalSum());
+    }
+
+    public function getPaymentsByType(PaymentByTypeRequest $request)
+    {
+        $data = $request->validated();
+        $payment_type_id = $data['payment_type_id'];
+
+        $total = $this->paymentRepository->getTotalByPaymentType($payment_type_id);
+
+        $categories = $this->paymentRepository->getCategoriesData($total,$payment_type_id);
+
+        return response()->json(['total'=>$total, 'categories'=>$categories], 200);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $payment_type_id = $data['payment_type_id'];
 
-        $summaries = Payment::with('currency')
-            ->select('payment_currency_id', DB::raw('SUM(amount) as total_amount'))
-            ->where('payment_type_id',$payment_type_id)
-            ->groupBy('payment_currency_id')
-            ->get();
-
-
-        $totalSum = Payment::selectRaw('SUM(CASE WHEN payment_type_id = 1 THEN amount ELSE 0 END) as positive_sum')
-            ->selectRaw('SUM(CASE WHEN payment_type_id = 2 THEN amount * -1 ELSE 0 END) as negative_sum')
-            ->first();
-        $totalSum = $totalSum->positive_sum + $totalSum->negative_sum;
-
-
-        $total = Payment::where('payment_type_id',$payment_type_id)->sum('amount');
-
-        $categories = Payment::with('category.icon')
-            ->select('category_id', DB::raw('SUM(amount) as total_amount'))
-            ->where('payment_type_id',$payment_type_id)
-            ->groupBy('category_id')
-            ->get()->each(function ($category) use ($total){
-                $category->percent = round($category->total_amount * 100 / $total, 2);
-
-                $category->payments = Payment::whereHas('category', function ($q) use ($category) {
-                    $q->where('id', $category->category_id);
-                })->get();
-
-            });
-
-        return response()->json(['summaries'=>$summaries, 'total'=>$total, 'totalSum' => $totalSum, 'categories'=>$categories], 200);
     }
 
     /**
@@ -59,8 +46,8 @@ class PaymentController extends Controller
      */
     public function store(PaymentRequest $request)
     {
-        if(Auth::user()->payments()->save(Payment::make($request->validated()))){
-            return response()->json(['message'=>'Payment was added'], 200);
+        if($payment = $this->paymentRepository->create(Auth::user(), $request->validated())){
+            return response()->json(['message'=>'Payment was added', 'data'=> new PaymentResource($payment)], 200);
         }
         return response()->json('Error', 500);
     }
@@ -78,7 +65,9 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        $payment->delete();
-        return response()->json('Removed', 200);
+        if($this->paymentRepository->delete($payment)){
+            return response()->json(['message'=>'Payment was removed', 'data'=> new PaymentResource($payment)], 200);
+        }
+        return response()->json('Error', 500);
     }
 }

@@ -24,6 +24,11 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('category', CategoryController::class);
     Route::apiResource('payment', PaymentController::class);
 
+
+    Route::get('/totalSum', [PaymentController::class, 'getTotalSum'])->name('payment.totalSum');
+    Route::get('/paymentsByType', [PaymentController::class, 'getPaymentsByType'])->name('payment.getPaymentsByType');
+
+
     Route::get('paymentType', PaymentTypeController::class)->name('paymentType');
     Route::get('currency', CurrencyController::class)->name('currency');
 

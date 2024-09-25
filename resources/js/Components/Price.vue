@@ -1,5 +1,6 @@
 <script setup>
 import { computed, useSlots } from 'vue';
+import priceFormat from "../hooks/priceFormat.js";
 const props = defineProps({
     price:{
         type:[String, Number]
@@ -11,7 +12,7 @@ const slots = useSlots();
 // Compute formatted value from slot content
 const formattedValue = computed(() => {
     if(props.price){
-        return Number(props.price).toFixed(2);
+        return priceFormat(props.price);
     }else{
         // Extract content from the default slot
         const slotContent = slots.default ? slots.default()[0].children : '';
