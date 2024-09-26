@@ -180,7 +180,7 @@ const reportLinks = [
             </Tab>
         </TabList>
 
-        <TabPanels class="mt-4">
+        <TabPanels class="mt-4 min-h-40 sm:min-h-80">
             <div>
                <TabPanel :key="paymentType.id" v-for="paymentType in paymentTypes">
                     <PlusIcon @click="openDialog = true"  class="h-8 cursor-pointer bg-black text-white rounded-md"></PlusIcon>
