@@ -184,7 +184,7 @@ const reportLinks = [
             <div>
                <TabPanel :key="paymentType.id" v-for="paymentType in paymentTypes">
 
-                   <PrimaryButton  @click="openDialog = true">
+                   <PrimaryButton class="mb-4" @click="openDialog = true">
                       Add new transaction
                    </PrimaryButton>
 
