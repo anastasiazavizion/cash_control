@@ -139,6 +139,7 @@ function makeReport(type){
 
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import Price from "../Components/Price.vue";
+import PrimaryButton from "../Components/PrimaryButton.vue";
 const reportLinks = [
     { label: 'Pdf', type:'pdf'},
     { label: 'Excel', type:'xlsx' },
@@ -182,7 +183,10 @@ const reportLinks = [
         <TabPanels class="mt-4 min-h-40 sm:min-h-80">
             <div>
                <TabPanel :key="paymentType.id" v-for="paymentType in paymentTypes">
-                    <PlusIcon @click="openDialog = true"  class="h-8 cursor-pointer bg-black text-white rounded-md"></PlusIcon>
+
+                   <PrimaryButton  @click="openDialog = true">
+                      Add new transaction
+                   </PrimaryButton>
 
                    <div>
                        <PaymentsByCategoryChart :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"></PaymentsByCategoryChart>
