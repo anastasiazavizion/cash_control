@@ -24,7 +24,6 @@ class PaymentRequest extends FormRequest
         return [
            'amount'=>['required', 'numeric', 'min:1'],
            'payment_type_id'=>['required','exists:payment_types,id'],
-           'payment_currency_id'=>['required','exists:payment_currencies,id'],
            'category_id'=>['required','exists:categories,id'],
            'payment_date'=>['nullable'],
            'description'=>['nullable'],
