@@ -16,10 +16,6 @@ const categories = computed(()=>{
     return  store.getters['category/categories'];
 })
 
-const currencies = computed(()=>{
-    return store.getters['currency/currencies'];
-})
-
 const paymentTypes = computed(()=>{
     return store.getters['paymentType/paymentTypes'].map((item, index)=>{
         return {
@@ -63,9 +59,6 @@ onMounted(async () => {
     await store.dispatch('category/getCategories');
 
     await store.dispatch('paymentType/getPaymentTypes');
-
-    await store.dispatch('currency/getCurrencies');
-
 
     const defaultPaymentTypeId = paymentTypes.value[0].id;
     activePaymentType.value = defaultPaymentTypeId;

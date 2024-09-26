@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\PaymentCurrency;
 use App\Models\PaymentType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,11 +19,6 @@ class PaymentTypesSeeder extends Seeder
         $data = [['name'=>'Income'], ['name'=>'Expenses']];
         foreach ($data as $paymentType){
             PaymentType::create($paymentType);
-        }
-
-        $data = [['name'=>'UAN'], ['name'=>'USD'], ['name'=>'EUR']];
-        foreach ($data as $paymentCurrency){
-            PaymentCurrency::create($paymentCurrency);
         }
     }
 }

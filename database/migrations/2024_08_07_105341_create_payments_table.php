@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\PaymentCurrency;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +18,6 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->constrained('categories')->cascadeOnDelete();
             $table->foreignIdFor(PaymentType::class)->constrained('payment_types');
             $table->text('description')->nullable();
-            $table->foreignIdFor(PaymentCurrency::class)->default(1);
             $table->timestamps();
         });
     }

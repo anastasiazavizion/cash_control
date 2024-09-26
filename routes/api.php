@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ExchangeRateController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentTypeController;
@@ -30,7 +29,6 @@ Route::middleware('auth:sanctum')->group(function (){
 
 
     Route::get('paymentType', PaymentTypeController::class)->name('paymentType');
-    Route::get('currency', CurrencyController::class)->name('currency');
 
     Route::apiResource('user_setting', UserSettingController::class)->only(['index', 'store']);
 });
