@@ -160,7 +160,7 @@ const reportLinks = [
                     @click="makeReport(link.type)"
                     v-for="link in reportLinks"
                     :key="link.type"
-                    class="cursor-pointer ui-active:bg-blue-500 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black  text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm"
+                    class="cursor-pointer hover:bg-slate-100 ui-active:bg-blue-500 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black  text-gray-900 group flex w-full items-center  px-2 py-2 text-sm"
                 >
                     <div>{{link.label }}</div>
                 </MenuItem>
