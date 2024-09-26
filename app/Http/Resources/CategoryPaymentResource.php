@@ -17,6 +17,7 @@ class CategoryPaymentResource extends JsonResource
         return [
             'id'=>$this->id,
             'amount'=>$this->amount,
+            'payment_date'=>$this->payment_date,
             'description'=>$this->description,
         ];
     }

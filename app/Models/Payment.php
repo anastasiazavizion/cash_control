@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
 
 #[ObservedBy([PaymentObserver::class])]
 class Payment extends Model
@@ -31,15 +30,10 @@ class Payment extends Model
         return $this->belongsTo(PaymentType::class);
     }
 
-    public function currency(): BelongsTo
-    {
-        return $this->belongsTo(PaymentCurrency::class, 'payment_currency_id');
-    }
-
     public function paymentDate() : Attribute
     {
         return Attribute::make(
-            set: fn ($value) => Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d'),
+            set: fn ($value) => (new \DateTime($value))->format('Y-m-d')
         );
     }
 
