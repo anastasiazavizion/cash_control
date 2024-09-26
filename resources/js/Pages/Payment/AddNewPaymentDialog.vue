@@ -56,13 +56,14 @@ const todayDate = formatDate(today);
 const yesterdayDate = formatDate(yesterday);
 const twoDaysAgoDate = formatDate(twoDaysAgo);
 
-props.paymentForm.payment_date = todayDate;
+props.paymentForm.payment_date = today;
 
 const defaultDates = [
-    {'date':todayDate, label:'today'},
-    {'date':yesterdayDate, label:'yesterday'},
-    {'date':twoDaysAgoDate, label:'2 days ago'},
+    {'date':today, 'formated_date':todayDate, label:'today'},
+    {'date':yesterday, 'formated_date':yesterdayDate, label:'yesterday'},
+    {'date':twoDaysAgo, 'formated_date':twoDaysAgoDate, label:'2 days ago'},
 ];
+
 
 
 import moment from 'moment';
@@ -77,6 +78,14 @@ function customFormatter(date){
 function setCategory(categoryId){
     props.paymentForm.category_id = categoryId;
 }
+
+function compareDates(date1, date2){
+    return (
+        date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() && // Months are 0-indexed, so January is 0
+        date1.getDate() === date2.getDate()
+    );
+}
 </script>
 
 <template>
@@ -85,36 +94,42 @@ function setCategory(categoryId){
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
             <DialogPanel class="w-full max-w-xl rounded bg-white dialog-panel">
                 <div class="relative">
-                    <XMarkIcon @click="emits('close-dialog')" class="icon absolute top-0 right-0"/>
+                    <XMarkIcon @click="emits('close-dialog')" class="icon right-position"/>
                 </div>
                 <DialogTitle class="dialog-title">Add new transaction</DialogTitle>
                 <form @submit.prevent="savePayment">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="col-span-2">
-                            <input  class="text-center border-b-2 border-t-0 border-r-0 border-l-0 border-gray-300  focus:outline-none p-2" required type="text" v-model="paymentForm.amount">
-                            <Errors v-if="errors" :errors="errors.amount"/>
-                        </div>
-                    </div>
+
+                    <FormRow name="amount" label="Amount">
+                        <input  class="form-control" required type="text" v-model="paymentForm.amount">
+                        <Errors v-if="errors" :errors="errors.amount"/>
+                    </FormRow>
+
 
                     <FormRow name="description" label="Description">
-                        <textarea id="description" name="description" placeholder="Description" class="w-full rounded-md border-slate-300" v-model="paymentForm.description"></textarea>
+                        <textarea id="description" name="description" placeholder="Description" class="form-control" v-model="paymentForm.description"></textarea>
                     </FormRow>
 
                     <FormRow name="date" label="Date">
-                        <div class="flex gap-4 justify-between  items-center">
-                            <div @click="setPaymentDate(date.date)" :key="date.date" v-for="date in defaultDates"
-                                 class="cursor-pointer text-center p-1"  :class="{'active-date': customFormatter(paymentForm.payment_date) === date.date}">
-                                <div>
-                                    {{date.date}}
-                                    <div class="text-sm">
-                                        {{date.label}}
+                        <div class="flex justify-between gap-8">
+
+                            <div class="flex flex-col w-1/2 gap-2">
+                                <div @click="setPaymentDate(date.date)" :key="date.date" v-for="date in defaultDates"
+                                     class="cursor-pointer text-center p-1 w-full"  :class="{'active-date': compareDates(paymentForm.payment_date, date.date)}">
+                                    <div>
+                                        {{date.formated_date}}
+                                        <div class="text-sm">
+                                            {{date.label}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <VueDatePicker  dark class="w-4 small-datepicker" :enable-time-picker="false" v-model="paymentForm.payment_date"></VueDatePicker>
+                                <VueDatePicker format="dd/MM/yyyy" class="w-full small-datepicker" :enable-time-picker="false" v-model="paymentForm.payment_date"></VueDatePicker>
                             </div>
+
+
                         </div>
+
                     </FormRow>
 
                     <FormRow name="categories" label="Categories">
@@ -134,9 +149,10 @@ function setCategory(categoryId){
                         <Errors v-if="errors" :errors="errors.category_id"/>
                     </FormRow>
 
-                    <div>
-                        <PrimaryButton type="submit">ADD</PrimaryButton>
+                    <div class="flex">
+                        <PrimaryButton class="ml-auto" type="submit">ADD</PrimaryButton>
                     </div>
+
                 </form>
             </DialogPanel>
         </div>

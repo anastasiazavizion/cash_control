@@ -10,7 +10,7 @@
     }
 
     form input[type=text], form input[type=password],form input[type=email], form select, .form-control{
-        @apply w-full rounded focus:ring-0;
+        @apply w-full rounded-md focus:outline-none active:outline-none focus:ring-0;
         border: $borderSize $borderStyle $formElementsBorderColor;
     }
 
@@ -157,11 +157,16 @@
     }
 
     .small-datepicker .dp__input_wrap{
-        @apply w-48;
+        @apply w-full;
     }
 
     .active-date{
-        @apply bg-emerald-500 text-white rounded-md;
+        @apply text-white rounded-md;
+        background-color: $mainColor;
+    }
+
+    .right-position{
+        @apply absolute top-0 right-0;
     }
 
 }
@@ -175,6 +180,16 @@ nav{
         @apply  text-white;
     }
 }
+
+.form-control:focus{
+    border: $borderSize $borderStyle $formElementsBorderColor;
+}
+
+button:focus,button:active{
+    border: transparent;
+    outline: none;
+}
+
 
 footer{
     background-color: $navColor;
