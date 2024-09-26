@@ -83,7 +83,6 @@ function closeDialog(){
     openDialog.value = false;
 }
 
-
 const errors = computed(()=>{
     return store.getters['payment/errors'];
 })

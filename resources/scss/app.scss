@@ -195,6 +195,17 @@ footer{
     }
 }
 
+.dangerous{
+    background-color: $dangerousColor;
+}
+.dangerous:hover{
+    background-color: $dangerousColorHover;
+}
+
+.icon{
+    @apply cursor-pointer h-6 text-slate-600;
+}
+
 
 .form-card{
 

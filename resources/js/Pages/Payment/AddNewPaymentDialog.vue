@@ -1,5 +1,5 @@
 <script setup>
-import {Dialog,DialogPanel, DialogTitle, RadioGroup, RadioGroupOption} from "@headlessui/vue";
+import {Dialog,DialogPanel, DialogTitle} from "@headlessui/vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 
@@ -68,6 +68,7 @@ const defaultDates = [
 import moment from 'moment';
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import Errors from "../../Components/Errors.vue";
+import {XMarkIcon} from "@heroicons/vue/24/solid";
 function customFormatter(date){
     return date;
     return moment(date).format('DD/MM/yyyy');
@@ -76,8 +77,6 @@ function customFormatter(date){
 function setCategory(categoryId){
     props.paymentForm.category_id = categoryId;
 }
-
-
 </script>
 
 <template>
@@ -85,6 +84,9 @@ function setCategory(categoryId){
         <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
             <DialogPanel class="w-full max-w-xl rounded bg-white dialog-panel">
+                <div class="relative">
+                    <XMarkIcon @click="emits('close-dialog')" class="icon absolute top-0 right-0"/>
+                </div>
                 <DialogTitle class="dialog-title">Add new transaction</DialogTitle>
                 <form @submit.prevent="savePayment">
                     <div class="grid grid-cols-3 gap-4">
@@ -92,13 +94,11 @@ function setCategory(categoryId){
                             <input  class="text-center border-b-2 border-t-0 border-r-0 border-l-0 border-gray-300  focus:outline-none p-2" required type="text" v-model="paymentForm.amount">
                             <Errors v-if="errors" :errors="errors.amount"/>
                         </div>
-
                     </div>
 
                     <FormRow name="description" label="Description">
                         <textarea id="description" name="description" placeholder="Description" class="w-full rounded-md border-slate-300" v-model="paymentForm.description"></textarea>
                     </FormRow>
-
 
                     <FormRow name="date" label="Date">
                         <div class="flex gap-4 justify-between  items-center">
@@ -116,7 +116,6 @@ function setCategory(categoryId){
                             </div>
                         </div>
                     </FormRow>
-
 
                     <FormRow name="categories" label="Categories">
                         <div class="flex flex-row flex-wrap gap-4">
@@ -138,9 +137,7 @@ function setCategory(categoryId){
                     <div>
                         <PrimaryButton type="submit">ADD</PrimaryButton>
                     </div>
-
                 </form>
-
             </DialogPanel>
         </div>
     </Dialog>
