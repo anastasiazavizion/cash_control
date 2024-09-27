@@ -2,7 +2,7 @@
 import {useStore} from "vuex";
 const store = useStore();
 import {useRouter} from "vue-router";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 const router = useRouter();
 
 const logout = async () => {
@@ -16,6 +16,21 @@ const user =  computed(()=>{
 
 const authenticated = computed(()=>{
     return store.getters['auth/authenticated']
+})
+
+const logoSrc = ref('');
+
+async function getLogo() {
+    try {
+        const response = await axios.get(route('getLogo'));
+        logoSrc.value = response.data;
+    } catch (error) {
+        console.error('Error fetching logo:', error);
+    }
+}
+
+onMounted(()=>{
+    getLogo();
 })
 
 import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
@@ -52,18 +67,11 @@ function navigate(href){
     }
 }
 
-const logoSrc = computed(()=>{
-    return import.meta.env.VITE_APP_URL + '/storage/logo/logo.png'
-})
-
 const showRate = ref(false);
+
 </script>
 
 <template>
-
-    {{window.Laravel.storageUrl}}
-
-
     <nav>
     <Dialog :open="showRate" @close="showRate = false" class="relative z-50 dialog">
         <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -87,7 +95,7 @@ const showRate = ref(false);
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex flex-shrink-0 items-center">
-                        <img class="h-8 w-auto cursor-pointer" :src="logoSrc" alt="Your Company" />
+                        <img v-if="logoSrc" class="h-8 w-auto cursor-pointer" :src="logoSrc" alt="Your Company" />
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">

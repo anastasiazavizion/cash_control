@@ -11,7 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Social\SocialAuthController;
 use App\Http\Controllers\UserSettingController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AppController;
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/user', [UserController::class, 'user'])->name('user');
@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function (){
 
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+
+Route::get('/getLogo', [AppController::class, 'getLogo'])->name('getLogo');
 
 Route::get('/test/{provider}', [SocialAuthController::class, 'redirectToProvider']);
 
