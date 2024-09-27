@@ -4,250 +4,157 @@
 
 @import "variables/variables";
 
+.main-color{
+    background-color: $mainColor;
+    &:hover {
+        background-color: $mainColorHover;
+    }
+    @apply text-white;
+}
+
 @layer base {
-    form label{
-        @apply font-bold;
+
+    html {
+        overflow-y: scroll;
     }
 
-    form input[type=text], form input[type=password],form input[type=email], form select, .form-control{
-        @apply w-full rounded-md focus:outline-none active:outline-none focus:ring-0;
-        border: $borderSize $borderStyle $formElementsBorderColor;
+    form{
+        input[type=text], input[type=password], input[type=email],  select, .form-control{
+            @apply w-full rounded-md focus:outline-none active:outline-none focus:ring-0;
+            border: $borderSize $borderStyle $formElementsBorderColor;
+
+            &:focus {
+                border: $borderSize $borderStyle $formElementsBorderColor;
+            }
+        }
+
+        label{
+            @apply font-bold;
+        }
     }
 
-    form > div{
-        @apply mt-2;
+    form {
+        > div {
+            @apply mt-2;
+        }
     }
 
-    table td, table th{
-        @apply border-collapse  p-2 ;
-        border: $borderSize $borderStyle $tableBorderColor;
-    }
-    table th{
-        background-color: $tableBgColor;
-    }
-
-    svg{
+    svg {
         @apply inline;
     }
 
-    nav, .dropdown-menu{
-        @apply text-white;
-        background-color: $navColor;
+    button {
+        &:focus, &:active {
+            border: transparent;
+            outline: none;
+        }
     }
+
 }
 
 @layer components {
-    .uploadBtn{
-        @apply inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-semibold text-xs
-        text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none
-        focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150;
-    }
 
-    .btn{
-        @apply p-1 rounded-md text-white font-bold cursor-pointer hover:shadow-md;
-    }
-
-    .btn-style{
-        background-color: $mainColor;
-    }
-    .btn-style:hover{
-        background-color: $mainColorHover;
-    }
-
-    .btn-checkout{
-        background-color: $btnCheckoutColor;
-        @apply p-2 mt-4;
-    }
-
-    .btn-checkout:hover{
-        background-color: $btnCheckoutColorHover;
-    }
-
-    .pagination-link-active{
+    nav, .dropdown-menu {
         @apply text-white;
-        background-color: $mainColor;
+        background-color: $navColor;
     }
 
-    .pagination-link-active:hover{
-        background-color: $mainColorHover;
-    }
-
-
-    .pagination-link{
-        @apply p-2 text-sm sm:p-3 border border-slate-300;
-    }
-
-    .cart-product-amount{
-        @apply absolute  text-white rounded-full h-6 w-6 text-center  left-5 bottom-3;
-        background-color: $mainColor;
-    }
-
-    .adminCard{
-        @apply relative text-3xl text-slate-800 font-bold shadow-lg rounded-lg p-24 border border-slate-300  text-center justify-center;
-        background: linear-gradient(45deg,$mainColor, #fff);
-    }
-
-    .error{
+    .error {
         @apply text-red-600 font-bold;
     }
 
-    .primary-btn{
-        @apply inline-flex text-center justify-center  px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
+    .primary-btn {
+        @apply inline-flex text-center justify-center  px-4 py-2 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest
         focus:outline-none  transition ease-in-out duration-150;
-
-        background-color: $mainColor;
+        @extend .main-color;
     }
 
-    .primary-btn:hover{
-        background-color: $mainColorHover;
-    }
-
-    .edit-btn{
-        background-color: $editColorBtn;
-    }
-    .edit-btn:hover{
-        background-color: $editColorBtnHover;
-    }
-
-    .default-component{
+    .default-component {
         @apply max-w-7xl mx-auto;
     }
 
-    main{
+    main {
         @apply p-4 lg:pr-0 lg:pl-0;
     }
 
-
-    .tableWithBorder{
-        @apply text-sm;
-    }
-
-    .tableWithBorder tr, .tableWithBorder td, .tableWithBorder th{
-        @apply /*border border-slate-300*/ p-1;
-    }
-    .tableWithBorder th{
-        @apply text-slate-500;
-    }
-    .tableWithBorder tr{
-        @apply border-b-2;
-    }
-
-    svg{
+    svg {
         @apply inline;
     }
 
-    .custom-radio .v-label {
-        font-size: 0.75rem !important; /* Smaller text size with higher priority */
-    }
-
-    .custom-radio .v-radio {
-        padding: 4px !important; /* Smaller padding with higher priority */
-    }
-
-    .dialog-panel{
+    .dialog-panel {
         @apply p-4;
     }
 
-    .dialog-title{
+    .dialog-title {
         @apply text-center font-bold text-xl;
     }
 
-    .radio-group-option{
+    .radio-group-option {
         @apply cursor-pointer;
     }
 
-    .small-datepicker .dp__input_wrap{
+    .small-datepicker .dp__input_wrap {
         @apply w-full;
     }
 
-    .active-date{
-        @apply text-white rounded-md;
-        background-color: $mainColor;
+    .active-date {
+        @apply rounded-md;
+        @extend .main-color;
     }
 
-    .right-position{
+    .right-position {
         @apply absolute top-0 right-0;
     }
 
 }
 
-nav{
-    .router-link-active{
+nav {
+    .router-link-active {
         @apply underline;
     }
 
-    .router-link{
-        @apply  text-white;
+    .router-link {
+        @apply text-white;
     }
 }
 
-.form-control:focus{
-    border: $borderSize $borderStyle $formElementsBorderColor;
-}
+@import "footer";
 
-button:focus,button:active{
-    border: transparent;
-    outline: none;
-}
-
-
-footer{
-    background-color: $navColor;
-    @apply p-4 text-white;
-
-    .social-icon{
-        @apply fill-gray-300 hover:fill-white w-7 h-7;
-    }
-    h4{
-        @apply text-lg font-semibold mb-4 text-white;
-    }
-
-    .footer-ul{
-        @apply space-y-2;
-        a{
-            @apply text-gray-300 hover:text-white text-sm;
-        }
-    }
-}
-
-.dangerous{
+.dangerous {
     background-color: $dangerousColor;
-}
-.dangerous:hover{
-    background-color: $dangerousColorHover;
+    &:hover {
+        background-color: $dangerousColorHover;
+    }
 }
 
-.icon{
+.icon {
     @apply cursor-pointer h-6 text-slate-600;
 }
 
+.form-card {
 
-.form-card{
-
-    input{
+    input {
         @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
     }
-    .social-btn{
+
+    .social-btn {
         @apply w-full mb-2 mt-4 px-5 py-3 inline-flex items-center rounded-lg text-[#333] text-base tracking-wider font-semibold border-none outline-none shadow-lg bg-gray-50 hover:bg-gray-100 active:bg-gray-50;
     }
 
 }
 
-
-.tab{
+.tab {
     @apply w-full rounded-lg p-4 text-base font-medium leading-5 focus:outline-none active:outline-none;
 }
 
-.active-tab{
+.active-tab {
     @apply text-blue-700 shadow;
 }
 
-
 .custom-toast {
-    background-color: $mainColor!important;
-    color: white;
+    @extend .main-color;
 }
 
 :root {
-    --primary-color: #{$mainColor}; // Interpolating the Sass variable
+    --primary-color: #{$mainColor};
 }
