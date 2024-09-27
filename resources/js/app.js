@@ -33,13 +33,13 @@ const Oauth = new UniversalSocialauth(axios, options);
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { Ziggy } from './ziggy';
 
 const app = createApp(App)
 .use(Toast)
 .use(router)
 .use(store)
-.use(ZiggyVue)
+.use(Ziggy)
 .use(LaravelPermissionToVueJS)
 
 app.config.globalProperties.$axios = axios;
