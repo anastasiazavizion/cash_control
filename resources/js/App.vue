@@ -60,6 +60,10 @@ const showRate = ref(false);
 </script>
 
 <template>
+
+    {{window.Laravel.storageUrl}}
+
+
     <nav>
     <Dialog :open="showRate" @close="showRate = false" class="relative z-50 dialog">
         <div class="fixed inset-0 bg-black/30" aria-hidden="true" />

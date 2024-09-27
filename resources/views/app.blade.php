@@ -14,7 +14,8 @@
 </div>
 <script type="text/javascript">
     window.Laravel = {
-        jsPermissions: {!! auth()->check() ? auth()->user()->jsPermissions() : 0!!}
+        jsPermissions: {!! auth()->check() ? auth()->user()->jsPermissions() : 0!!},
+        storageUrl: '{{ Storage::temporaryUrl('/logo/logo.png') }}',
     }
 </script>
 </body>
