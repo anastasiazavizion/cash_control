@@ -15,9 +15,9 @@ class AuthController
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['message' => 'Authenticated'], 200);
+            return response()->json('Authenticated', 200);
         }
-        return response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json('Unauthorized', 401);
    }
 
     public function logout(Request $request)
@@ -25,6 +25,6 @@ class AuthController
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return response()->json(['message' => 'Logout'], 200);
+        return response()->json('Logout', 200);
     }
 }

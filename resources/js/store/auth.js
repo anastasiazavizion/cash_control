@@ -14,6 +14,8 @@ const getters = {
 
 const mutations = {
     SET_AUTHENTICATED (state, value) {
+        console.log('SET_AUTHENTICATED');
+        console.log(value);
         state.authenticated = value;
     },
     SET_USER (state, value) {
@@ -45,9 +47,6 @@ const actions = {
             commit('setErrors',error.response.data.errors);
         }
     },
-
-
-
 
     async getUser({ commit }, payload) {
         try {
