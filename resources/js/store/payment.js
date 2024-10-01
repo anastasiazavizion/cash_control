@@ -54,9 +54,9 @@ const actions = {
         commit('setErrors', []);
     },
 
-    async getTotalSum({ commit }) {
+    async getTotalSum({ commit },payload) {
         try {
-            const response = await axios.get(route('payment.totalSum'));
+            const response = await axios.get(route('payment.totalSum'), {params:payload});
             commit('setTotalSum', response.data);
         } catch (error) {
 

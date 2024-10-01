@@ -50,6 +50,11 @@
         }
     }
 
+    input[type=checkbox]{
+        @apply h-4 w-4 rounded border-gray-300 focus:ring-transparent;
+        color: $mainColor;
+    }
+
 }
 
 @layer components {
@@ -105,6 +110,51 @@
         @apply absolute top-0 right-0;
     }
 
+
+
+    .category-icon-component{
+        @apply h-8 cursor-pointer text-white rounded-md;
+    }
+
+
+    .dangerous {
+        background-color: $dangerousColor;
+        &:hover {
+            background-color: $dangerousColorHover;
+        }
+    }
+
+    .icon {
+        @apply cursor-pointer h-6 text-slate-600;
+    }
+
+    .form-card {
+
+        input {
+            @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+        }
+
+        .social-btn {
+            @apply w-full mb-2 mt-4 px-5 py-3 inline-flex items-center rounded-lg text-[#333] text-base tracking-wider font-semibold border-none outline-none shadow-lg bg-gray-50 hover:bg-gray-100 active:bg-gray-50;
+        }
+
+    }
+
+    .tab {
+        @apply w-full rounded-lg p-4 text-base font-medium leading-5 focus:outline-none active:outline-none;
+    }
+
+    .active-tab {
+        @apply text-blue-700 shadow;
+    }
+
+    .default-datepicker{
+        @apply w-full small-datepicker;
+    }
+
+    .filter-date-picker{
+        width: 25%!important;
+    }
 }
 
 nav {
@@ -119,36 +169,6 @@ nav {
 
 @import "footer";
 
-.dangerous {
-    background-color: $dangerousColor;
-    &:hover {
-        background-color: $dangerousColorHover;
-    }
-}
-
-.icon {
-    @apply cursor-pointer h-6 text-slate-600;
-}
-
-.form-card {
-
-    input {
-        @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
-    }
-
-    .social-btn {
-        @apply w-full mb-2 mt-4 px-5 py-3 inline-flex items-center rounded-lg text-[#333] text-base tracking-wider font-semibold border-none outline-none shadow-lg bg-gray-50 hover:bg-gray-100 active:bg-gray-50;
-    }
-
-}
-
-.tab {
-    @apply w-full rounded-lg p-4 text-base font-medium leading-5 focus:outline-none active:outline-none;
-}
-
-.active-tab {
-    @apply text-blue-700 shadow;
-}
 
 .custom-toast {
     @extend .main-color;

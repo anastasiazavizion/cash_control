@@ -10,10 +10,10 @@ interface PaymentRepositoryContract
 {
     public function create(User|Authenticatable $user, array $data): Payment;
     public function delete(Payment $payment): bool;
-    public function getTotalSum(): float;
+    public function getTotalSum(array $filters): float;
 
-    public function getTotalByPaymentType(int $typeId): float;
+    public function getTotalByPaymentType(array $filters): float;
 
-    public function getCategoriesData(float $total,int  $typeId);
+    public function getCategoriesData(float $total,array $filters);
 
 }

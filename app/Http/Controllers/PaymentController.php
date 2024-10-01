@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentByTypeRequest;
 use App\Http\Requests\PaymentRequest;
+use App\Http\Requests\TotalSumRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
@@ -17,19 +18,18 @@ class PaymentController extends Controller
     {
     }
 
-    public function getTotalSum()
+    public function getTotalSum(TotalSumRequest $request)
     {
-        return response()->json($this->paymentRepository->getTotalSum());
+        return response()->json($this->paymentRepository->getTotalSum($request->validated()));
     }
 
     public function getPaymentsByType(PaymentByTypeRequest $request)
     {
         $data = $request->validated();
-        $payment_type_id = $data['payment_type_id'];
 
-        $total = $this->paymentRepository->getTotalByPaymentType($payment_type_id);
+        $total = $this->paymentRepository->getTotalByPaymentType($data);
 
-        $categories = $this->paymentRepository->getCategoriesData($total,$payment_type_id);
+        $categories = $this->paymentRepository->getCategoriesData($total,$data);
 
         return response()->json(['total'=>$total, 'categories'=>CategoryResource::collection($categories)], 200);
     }

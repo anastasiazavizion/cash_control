@@ -8,7 +8,13 @@ import listenLimitEvents from '../hooks/listenLimitEvents.js'
 import PaymentsByCategoryChart from "./Payment/PaymentsByCategoryChart.vue";
 import PaymentsByCategory from "./Payment/PaymentsByCategory.vue";
 import AddNewPaymentDialog from "./Payment/AddNewPaymentDialog.vue";
-import {PlusIcon, CurrencyDollarIcon} from '@heroicons/vue/24/solid'
+import {FunnelIcon, CurrencyDollarIcon} from '@heroicons/vue/24/solid'
+import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
+import Price from "../Components/Price.vue";
+import PrimaryButton from "../Components/PrimaryButton.vue";
+import * as HeroIcons from "@heroicons/vue/24/solid/index.js";
+import VueDatePicker from '@vuepic/vue-datepicker';
+
 
 const store = useStore();
 
@@ -40,29 +46,38 @@ const paymentsByCategory = computed(() => {
 
 const loaded = ref(false);
 
+const filters = ref({
+    categories:[],
+    date_from:null,
+    date_to:null,
+});
+
 async function getPaymentsByTypeId(id) {
     loaded.value = false;
 
-    await store.dispatch('payment/getPaymentsByType', {'payment_type_id': id});
+    await store.dispatch('payment/getPaymentsByType', {...filters.value, 'payment_type_id': id});
 
-    await store.dispatch('payment/getTotalSum');
+    await store.dispatch('payment/getTotalSum', filters.value);
     loaded.value = true;
 }
 
 const activePaymentType = ref(0);
 
-onMounted(async () => {
-
+async function loadData() {
     await store.dispatch('payment/clearErrors');
-
-    await store.dispatch('category/getCategories');
-
-    await store.dispatch('paymentType/getPaymentTypes');
 
     const defaultPaymentTypeId = paymentTypes.value[0].id;
     activePaymentType.value = defaultPaymentTypeId;
 
     await getPaymentsByTypeId(defaultPaymentTypeId);
+}
+onMounted(async () => {
+
+    await store.dispatch('category/getCategories');
+
+    await store.dispatch('paymentType/getPaymentTypes');
+
+    await loadData();
 
     loaded.value = true;
 })
@@ -138,15 +153,30 @@ function makeReport(type) {
     });
 }
 
-import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
-import Price from "../Components/Price.vue";
-import PrimaryButton from "../Components/PrimaryButton.vue";
-
 const reportLinks = [
     {label: 'Pdf', type: 'pdf'},
     {label: 'Excel', type: 'xlsx'},
 ]
 
+
+const showFilters = ref(false);
+
+function applyFilters() {
+    console.log('applyFilters');
+    loadData();
+}
+
+function setFilterCategories(id){
+    if(!isInFiltersCategories(id)){
+        filters.value.categories.push(id);
+    }else{
+        filters.value.categories.splice(filters.value.categories.indexOf(id),1);
+    }
+}
+
+function isInFiltersCategories(id){
+    return filters.value.categories.indexOf(id) !== -1;
+}
 
 </script>
 
@@ -155,9 +185,9 @@ const reportLinks = [
         <AddNewPaymentDialog :errors="errors" @close-dialog="closeDialog" @save-payment="savePayment"
                              :payment-form="paymentForm" :open-dialog="openDialog"/>
 
-        <div class="fixed">
+        <div class="flex gap-4">
             <Menu as="div" class="relative inline-block text-left">
-                <MenuButton class="primary-btn">Create report</MenuButton>
+                <MenuButton @click="showFilters = false" class="primary-btn">Create report</MenuButton>
                 <MenuItems
                     class="absolute left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                     <MenuItem
@@ -172,8 +202,39 @@ const reportLinks = [
 
                 </MenuItems>
             </Menu>
+            <PrimaryButton @click="showFilters = !showFilters">Filter</PrimaryButton>
         </div>
 
+        <div v-if="showFilters" class="absolute w-full p-4 bg-white rounded-lg shadow-md mt-4">
+            <form class="product-filter-form" @submit.prevent="applyFilters">
+                <div class="mb-4">
+                    <div class="font-bold">Categories</div>
+                    <div class="flex flex-col gap-2">
+                        <div :key="category.id" v-for="category in categories">
+                            <div class="items-center flex gap-1">
+                                <input type="checkbox" @click="setFilterCategories(category.id)">
+                                <div class="inline-block shadow-sm  w-4 h-4 rounded-full" :style="{'backgroundColor': category.icon.color}"></div>
+                                <span>{{category.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sm:flex sm:gap-4 sm:items-center">
+                    <div class="font-bold">Date From</div>
+                    <div>
+                        <VueDatePicker format="dd/MM/yyyy" :enable-time-picker="false" v-model="filters.date_from"></VueDatePicker>
+                    </div>
+                    <div class="font-bold">Date To</div>
+                    <div>
+                        <VueDatePicker format="dd/MM/yyyy" :enable-time-picker="false" v-model="filters.date_to"></VueDatePicker>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <PrimaryButton>Apply Filters</PrimaryButton>
+                </div>
+            </form>
+        </div>
 
         <div class="mb-4 mt-4 text-center">
             <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon>

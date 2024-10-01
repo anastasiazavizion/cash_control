@@ -47,4 +47,27 @@ class Payment extends Model
         return $query->where('payment_type_id',$typeId);
     }
 
+    public function scopeByCategories(Builder $query, array $categories)
+    {
+        return $query->whereHas('category',function (Builder $query) use ($categories){
+            $query->whereIn('id',$categories);
+        });
+    }
+
+    public function scopeFilter(Builder $query, array $filters)
+    {
+        return $query->when(isset($filters['payment_type_id']), function ($query) use ($filters) {
+            $query->byPaymentType($filters['payment_type_id']);
+        })
+            ->when(isset($filters['categories']), function ($query) use ($filters) {
+                $query->byCategories($filters['categories']);
+            })
+            ->when(isset($filters['date_from']), function ($query) use ($filters) {
+                return $query->where('payment_date', '>=', $filters['date_from']);
+            })
+            ->when(isset($filters['date_to']), function ($query) use ($filters) {
+                return $query->where('payment_date', '<=', $filters['date_to']);
+            });
+    }
+
 }

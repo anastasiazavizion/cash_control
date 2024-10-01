@@ -70,10 +70,6 @@ import moment from 'moment';
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import Errors from "../../Components/Errors.vue";
 import {XMarkIcon} from "@heroicons/vue/24/solid";
-function customFormatter(date){
-    return date;
-    return moment(date).format('DD/MM/yyyy');
-}
 
 function setCategory(categoryId){
     props.paymentForm.category_id = categoryId;
@@ -141,7 +137,7 @@ function compareDates(date1, date2){
                                     {{category.name}}
                                     <component :style="{'backgroundColor':category.icon.color}"
                                                :is="HeroIcons[category.icon.icon]"
-                                               class="h-8 cursor-pointer text-white rounded-md">
+                                               class="category-icon-component">
                                     </component>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaymentByTypeRequest extends FormRequest
+class TotalSumRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,6 @@ class PaymentByTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_type_id'=>'required|exists:payment_types,id',
             'categories.*'=>'nullable|exists:categories,id',
             'date_from'=>'nullable|date',
             'date_to'=>'nullable|date',
