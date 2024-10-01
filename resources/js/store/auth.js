@@ -28,10 +28,11 @@ const mutations = {
 
 const actions = {
     async login({ commit, dispatch}, payload) {
+        console.log('login action');
         try {
             await axios.post(route('login'), payload);
             commit('setErrors', []);
-            dispatch('getUser');
+            await dispatch('getUser');
         } catch (error) {
             commit('setErrors', error.response.data.errors);
         }
@@ -51,10 +52,11 @@ const actions = {
     async getUser({ commit }, payload) {
         try {
             const response = await axios.get(route('user'));
-            const { user} = response.data;
+            const { user, permissions } = response.data;
+            window.Laravel.jsPermissions = JSON.parse(permissions);
             commit('SET_USER', user);
             commit('SET_AUTHENTICATED', true);
-            commit('setErrors', null);
+            commit('setErrors', []);
         } catch (error) {
             commit('SET_USER', {});
             commit('SET_AUTHENTICATED', false);
@@ -67,6 +69,7 @@ const actions = {
             await axios.post(route('logout'));
             commit('SET_USER', {});
             commit('SET_AUTHENTICATED', false);
+            window.Laravel.jsPermissions = 0;
         }catch (error){
 
         }

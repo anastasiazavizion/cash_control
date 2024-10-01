@@ -67,6 +67,9 @@ router.beforeEach(async (to, from, next) => {
             if (rule.includes('can:')) {
                 allow = permission.includes(rule.replace('can:', ''));
             } else if (rule === 'auth') {
+                console.log('authenticated=');
+                console.log(store.getters['auth/authenticated']);
+
                 allow = store.getters['auth/authenticated'];
             } else {
                 allow = roles.includes(rule);
