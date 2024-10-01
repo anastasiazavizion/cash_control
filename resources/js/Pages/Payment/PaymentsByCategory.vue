@@ -33,11 +33,11 @@ function isVisibleCategory(id) {
 </script>
 
 <template>
-    <div class="cursor-pointer"
+    <div
          :key="category.id"
          v-for="category in categories">
         <div @click="showPayments(category.id)" :style="{ backgroundColor: category.icon.color}"
-             class="grid grid-cols-3 my-2 text-white p-2 mb-4 rounded-md">
+             class="cursor-pointer grid grid-cols-3 my-2 text-white p-2 mb-4 rounded-md">
             <div class="col-span-2">
                 <component :style="{'backgroundColor':category.icon.color}"
                            :is="HeroIcons[category.icon.icon]"
@@ -64,7 +64,7 @@ function isVisibleCategory(id) {
                     <div class="flex justify-between">
                         <div>{{ payment.payment_date }}</div>
                         <div title="Delete payment" class="text-slate-500">
-                            <XMarkIcon @click="removePayment(payment.id)" class="w-8"></XMarkIcon>
+                            <XMarkIcon @click="removePayment(payment.id)" class="w-8 cursor-pointer"></XMarkIcon>
                         </div>
                     </div>
                 </div>

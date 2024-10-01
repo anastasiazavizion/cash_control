@@ -137,7 +137,6 @@
         .social-btn {
             @apply w-full mb-2 mt-4 px-5 py-3 inline-flex items-center rounded-lg text-[#333] text-base tracking-wider font-semibold border-none outline-none shadow-lg bg-gray-50 hover:bg-gray-100 active:bg-gray-50;
         }
-
     }
 
     .tab {
@@ -155,6 +154,10 @@
     .filter-date-picker{
         width: 25%!important;
     }
+
+    .menu-padding{
+        @apply p-2 sm:px-6 lg:px-8;
+    }
 }
 
 nav {
@@ -169,9 +172,9 @@ nav {
 
 @import "footer";
 
-
-.custom-toast {
-    @extend .main-color;
+.custom-toast{
+    background-color: $mainColor!important;
+    color: white;
 }
 
 :root {

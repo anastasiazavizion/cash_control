@@ -31,10 +31,13 @@ const actions = {
             commit('setErrors', []);
             await dispatch('getUser');
         } catch (error) {
-            commit('setErrors', error.response.data.errors);
+            if(error.response.status === 403){
+                commit('setErrors',{auth:true});
+            }else{
+                commit('setErrors',error.response.data.errors);
+            }
         }
     },
-
 
     async register({ commit, dispatch}, payload) {
         try {

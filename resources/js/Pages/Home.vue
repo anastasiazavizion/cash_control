@@ -2,19 +2,16 @@
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
 import {TabGroup, TabList, Tab, TabPanels, TabPanel} from '@headlessui/vue'
-
 import listenLimitEvents from '../hooks/listenLimitEvents.js'
 
 import PaymentsByCategoryChart from "./Payment/PaymentsByCategoryChart.vue";
 import PaymentsByCategory from "./Payment/PaymentsByCategory.vue";
 import AddNewPaymentDialog from "./Payment/AddNewPaymentDialog.vue";
-import {FunnelIcon, CurrencyDollarIcon} from '@heroicons/vue/24/solid'
+import {CurrencyDollarIcon} from '@heroicons/vue/24/solid'
 import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
 import Price from "../Components/Price.vue";
 import PrimaryButton from "../Components/PrimaryButton.vue";
-import * as HeroIcons from "@heroicons/vue/24/solid/index.js";
 import VueDatePicker from '@vuepic/vue-datepicker';
-
 
 const store = useStore();
 
@@ -101,10 +98,8 @@ const errors = computed(() => {
     return store.getters['payment/errors'];
 })
 
-
 async function savePayment(form) {
     await store.dispatch('payment/savePayment', form);
-
     if (Object.keys(errors.value).length === 0) {
         await getPaymentsByTypeId(form.payment_type_id);
         closeDialog();

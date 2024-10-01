@@ -4,6 +4,7 @@ const store = useStore();
 import {useRouter} from "vue-router";
 import {computed, onMounted, ref} from "vue";
 const router = useRouter();
+import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
 
 const logout = async () => {
     await store.dispatch('auth/logout');
@@ -32,8 +33,6 @@ async function getLogo() {
 onMounted(()=>{
     getLogo();
 })
-
-import ExchangeRate from "@/Pages/ExchangeRate/Index.vue";
 
 import {
     Dialog, DialogPanel,
@@ -82,19 +81,22 @@ const showRate = ref(false);
         </div>
     </Dialog>
     <Disclosure as="nav" v-slot="{ open }">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl menu-padding">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
-                    <DisclosureButton class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <DisclosureButton class="relative inline-flex items-center justify-center rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span class="absolute -inset-0.5" />
                         <span class="sr-only">Open main menu</span>
                         <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
                         <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
                     </DisclosureButton>
                 </div>
-                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                    <div class="flex flex-shrink-0 items-center">
+
+
+                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start mr-8">
+
+                 <div class="flex flex-shrink-0 items-center">
                         <img v-if="logoSrc" class="h-8 w-auto cursor-pointer" :src="logoSrc" alt="Your Company" />
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
@@ -112,9 +114,9 @@ const showRate = ref(false);
                     </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <ExchangeRate class="hidden sm:inline text-white"></ExchangeRate>
+                    <ExchangeRate class="hidden sm:inline text-white mr-1"></ExchangeRate>
                     <InformationCircleIcon @click="showRate = true" class="sm:hidden text-white h-8 cursor-pointer"></InformationCircleIcon>
-                    <Menu v-if="authenticated" as="div" class="relative ml-3">
+                    <Menu v-if="authenticated" as="div" class="relative ml-1">
                         <div class="flex gap-4 items-center text-white \">
                             <span class="">{{user.name}}</span>
                             <MenuButton  class="text-white relative items-center gap-4  flex rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -132,8 +134,9 @@ const showRate = ref(false);
                 </div>
             </div>
         </div>
-        <DisclosurePanel class="sm:hidden">
-            <div class="space-y-1 px-2 pb-3 pt-2">
+
+        <DisclosurePanel class="sm:hidden menu-padding">
+            <div class="flex flex-col gap-2">
                 <DisclosureButton v-for="item in visibleNavigation" :key="item.name" as="a" :href="item.href">{{ item.name }}</DisclosureButton>
             </div>
         </DisclosurePanel>

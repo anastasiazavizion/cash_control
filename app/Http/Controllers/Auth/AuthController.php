@@ -17,7 +17,7 @@ class AuthController
             $request->session()->regenerate();
             return response()->json('Authenticated', 200);
         }
-        return response()->json('Unauthorized', 401);
+        return response()->json('Unauthorized', 403);
    }
 
     public function logout(Request $request)

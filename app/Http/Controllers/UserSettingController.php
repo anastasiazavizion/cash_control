@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserSettingRequest;
-use App\Models\UserSetting;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserSettingController extends Controller
@@ -26,7 +24,7 @@ class UserSettingController extends Controller
             ['user_id' => Auth::id()],
             $request->validated()
         );
-        return response()->json('Success');
+        return response()->json(['message'=>'Settings saved']);
     }
 
 }
