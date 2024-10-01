@@ -4,18 +4,25 @@
 
             <FormDiv>
                 <template #label><Label name="email">Email</Label></template>
-                <input v-model="auth.email" id="email" name="email" type="email" autocomplete="email" required="" />
+                <input v-model="auth.email" id="email" name="email" type="email" autocomplete="email" required=""/>
                 <Errors v-if="errors" :errors="errors.email"/>
             </FormDiv>
 
             <FormDiv>
                 <template #label><Label name="password">Password</Label></template>
-                <input v-model="auth.password" id="password" name="password" type="password" autocomplete="current-password" required="" />
+                <input v-model="auth.password" id="password" name="password" type="password"
+                       autocomplete="current-password" required=""/>
             </FormDiv>
 
             <div class="text-right">
                 <PrimaryButton>Sign in</PrimaryButton>
             </div>
+
+            <div v-if="errors.auth" class="text-red-600 font-bold">
+                Something is wrong...
+            </div>
+
+
         </form>
 
         <div>
@@ -51,7 +58,7 @@ import FormDiv from "../../Components/FormDiv.vue";
 const router = useRouter();
 const store = useStore();
 
-onMounted(()=>{
+onMounted(() => {
     store.dispatch('auth/clearErrors');
 })
 
@@ -64,9 +71,9 @@ const errors = computed(()=>{
     return store.getters['auth/errors'];
 })
 
+
 async function redirectToHome() {
-    console.log(Object.keys(errors.value).length);
-    if(Object.keys(errors.value).length === 0){
+    if (Object.keys(errors.value).length === 0) {
         await router.push('/home');
     }
 }
@@ -110,7 +117,7 @@ function useAuthProvider(provider, proData) {
 function useSocialLogin() {
     const pdata = {code: responseData.value.code, otp: data.value.tok, hash: hash.value}
     box.$axios
-        .post(route('auth.social.callback',responseData.value.provider), pdata)
+        .post(route('auth.social.callback', responseData.value.provider), pdata)
         .then(async (response) => {
             if (response.data.status === 444) {
                 hash.value = response.data.hash

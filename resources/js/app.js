@@ -36,7 +36,9 @@ import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import { Ziggy } from './ziggy';
 
 const app = createApp(App)
-.use(Toast)
+.use(Toast, {
+        toastClassName:'custom-toast'
+    })
 .use(router)
 .use(store)
 .use(Ziggy)
