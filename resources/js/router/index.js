@@ -9,6 +9,7 @@ import Settings from "@/Pages/Account/Settings.vue";
 const routes = [
     {
         path: '/home',
+        name:"home",
         component: Home,
         meta: {
             middleware: ["auth"],

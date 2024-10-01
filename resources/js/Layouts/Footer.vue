@@ -30,31 +30,31 @@ import GithubIconFooter from "@/Components/Icons/GithubIconFooter.vue";
             </div>
 
             <div>
-                <h4>Contact Us</h4>
+                <h4>{{$t('Contact Us')}}</h4>
                 <ul class="footer-ul">
                     <li>
-                        <a href="mailto:a.zavizion.a@gmail.com">Email</a>
+                        <a href="mailto:a.zavizion.a@gmail.com">{{$t('Email')}}</a>
                     </li>
                     <li>
-                        <a href="tel:+380661865727">Phone</a>
+                        <a href="tel:+380661865727">{{$t('Phone')}}</a>
                     </li>
                 </ul>
             </div>
 
             <div>
-                <h4>Information</h4>
+                <h4>{{$t('Information')}}</h4>
                 <ul class="footer-ul">
                     <li>
-                        <a href="javascript:void(0)">About Us</a>
+                        <a href="javascript:void(0)">{{$t('About Us')}}</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">Terms &amp; Conditions</a>
+                        <a href="javascript:void(0)">{{$t('Terms Conditions')}}</a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <p class="text-gray-300 text-sm mt-10 text-center">© All rights reserved.</p>
+        <p class="text-gray-300 text-sm mt-10 text-center">© {{$t('All rights reserved.')}}</p>
         </div>
     </footer>
 </template>

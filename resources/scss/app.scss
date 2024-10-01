@@ -158,6 +158,14 @@
     .menu-padding{
         @apply p-2 sm:px-6 lg:px-8;
     }
+
+    .locale-default{
+        border: 1px solid $navColor;
+    }
+
+    .locale-active{
+        border: 1px solid #ffffff;
+    }
 }
 
 nav {
