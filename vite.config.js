@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
+import i18n from 'laravel-vue-i18n/vite';
+
 export default defineConfig({
     server: {
         port: '5177'
@@ -11,6 +13,7 @@ export default defineConfig({
             refresh: true,
         }),
         vue(),
+        i18n()
     ],
     resolve: {
         alias: {

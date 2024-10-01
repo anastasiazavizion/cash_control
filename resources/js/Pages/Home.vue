@@ -13,6 +13,10 @@ import Price from "../Components/Price.vue";
 import PrimaryButton from "../Components/PrimaryButton.vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n();
+
 const store = useStore();
 
 const categories = computed(() => {
@@ -144,7 +148,7 @@ function makeReport(type) {
             link.remove(); // Clean up the DOM after download
         }
     }).catch(error => {
-        alert('There was an error downloading the file!', error);
+        alert(t('There was an error downloading the file'), error);
     });
 }
 
@@ -172,7 +176,6 @@ function setFilterCategories(id){
 function isInFiltersCategories(id){
     return filters.value.categories.indexOf(id) !== -1;
 }
-
 </script>
 
 <template>
@@ -182,7 +185,7 @@ function isInFiltersCategories(id){
 
         <div class="flex gap-4">
             <Menu as="div" class="relative inline-block text-left">
-                <MenuButton @click="showFilters = false" class="primary-btn">Create report</MenuButton>
+                <MenuButton @click="showFilters = false" class="primary-btn">{{$t('Create report')}}</MenuButton>
                 <MenuItems
                     class="absolute left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                     <MenuItem
@@ -197,13 +200,13 @@ function isInFiltersCategories(id){
 
                 </MenuItems>
             </Menu>
-            <PrimaryButton @click="showFilters = !showFilters">Filter</PrimaryButton>
+            <PrimaryButton @click="showFilters = !showFilters">{{$t('Filter')}}</PrimaryButton>
         </div>
 
         <div v-if="showFilters" class="absolute w-full p-4 bg-white rounded-lg shadow-md mt-4">
             <form class="product-filter-form" @submit.prevent="applyFilters">
                 <div class="mb-4">
-                    <div class="font-bold">Categories</div>
+                    <div class="font-bold">{{$t('Categories')}}</div>
                     <div class="flex flex-col gap-2">
                         <div :key="category.id" v-for="category in categories">
                             <div class="items-center flex gap-1">
@@ -215,25 +218,24 @@ function isInFiltersCategories(id){
                     </div>
                 </div>
                 <div class="sm:flex sm:gap-4 sm:items-center">
-                    <div class="font-bold">Date From</div>
+                    <div class="font-bold">{{$t('Date From')}}</div>
                     <div>
                         <VueDatePicker format="dd/MM/yyyy" :enable-time-picker="false" v-model="filters.date_from"></VueDatePicker>
                     </div>
-                    <div class="font-bold">Date To</div>
+                    <div class="font-bold">{{$t('Date To')}}</div>
                     <div>
                         <VueDatePicker format="dd/MM/yyyy" :enable-time-picker="false" v-model="filters.date_to"></VueDatePicker>
                     </div>
                 </div>
-
                 <div class="mb-4">
-                    <PrimaryButton>Apply Filters</PrimaryButton>
+                    <PrimaryButton>{{$t('Apply Filters')}}</PrimaryButton>
                 </div>
             </form>
         </div>
 
         <div class="mb-4 mt-4 text-center">
             <CurrencyDollarIcon class="h-6"></CurrencyDollarIcon>
-            Total
+            {{$t('Total')}}
             <Price>{{ totalSum }}</Price>
         </div>
 
@@ -251,20 +253,18 @@ function isInFiltersCategories(id){
                     <TabPanel :key="paymentType.id" v-for="paymentType in paymentTypes">
 
                         <PrimaryButton class="mb-4" @click="openDialog = true">
-                            Add new transaction
+                            {{$t('Add new transaction')}}
                         </PrimaryButton>
 
                         <div>
-                            <PaymentsByCategoryChart :total="total" :paymentsByCategory="paymentsByCategory"
-                                                     v-if="loaded"></PaymentsByCategoryChart>
+                            <PaymentsByCategoryChart :total="total" :paymentsByCategory="paymentsByCategory" v-if="loaded"/>
                         </div>
                         <div class="mt-4">
                             <PaymentsByCategory @save-visible-categories="saveVisibleCategories"
                                                 @remove-payment="removePayment" v-if="loaded"
                                                 :categories="paymentsByCategory"
                                                 :visibleCategories="visibleCategories"
-                            >
-                            </PaymentsByCategory>
+                            />
                         </div>
                     </TabPanel>
                 </div>

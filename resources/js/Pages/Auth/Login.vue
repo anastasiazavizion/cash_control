@@ -1,41 +1,37 @@
 <template>
-    <FormCard header="Sign in to your account">
+    <FormCard :header="$t('Sign in to your account')">
         <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
-
             <FormDiv>
-                <template #label><Label name="email">Email</Label></template>
+                <template #label><Label name="email">{{$t('Email')}}</Label></template>
                 <input v-model="auth.email" id="email" name="email" type="email" autocomplete="email" required=""/>
                 <Errors v-if="errors" :errors="errors.email"/>
             </FormDiv>
 
             <FormDiv>
-                <template #label><Label name="password">Password</Label></template>
-                <input v-model="auth.password" id="password" name="password" type="password"
-                       autocomplete="current-password" required=""/>
+                <template #label><Label name="password">{{$t('Password')}}</Label></template>
+                <input v-model="auth.password" id="password" name="password" type="password" autocomplete="current-password" required=""/>
             </FormDiv>
 
             <div class="text-right">
-                <PrimaryButton>Sign in</PrimaryButton>
+                <PrimaryButton>{{$t('Sign in')}}</PrimaryButton>
             </div>
 
             <div v-if="errors.auth" class="text-red-600 font-bold">
-                Something is wrong...
+                {{$t('Something is wrong')}}
             </div>
-
-
         </form>
 
         <div>
             <button @click="useAuthProvider('google', null)" type="button"
                     class="social-btn">
                 <GoogleIcon/>
-                Continue with Google
+                {{$t('Continue with Google')}}
             </button>
 
             <button @click="useAuthProvider('github', null)" type="button"
                     class="social-btn">
                 <GithubIcon/>
-                Continue with GitHub
+                {{$t('Continue with GitHub')}}
             </button>
         </div>
     </FormCard>

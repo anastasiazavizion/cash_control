@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExchangeRateController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\ReportController;
@@ -44,3 +45,17 @@ Route::get('/test/{provider}', [SocialAuthController::class, 'redirectToProvider
 Route::post('/auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('auth.social.callback');
 
 Route::get('exchangeRate', ExchangeRateController::class)->name('exchangeRate');
+
+
+
+Route::get('language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
+})->name('language.locale');
+
+
+Route::get('/locale/translations', [LocaleController::class, 'translations'])->name('locale.translations');
+Route::post('/locale/{locale}', [LocaleController::class, 'store'])->name('locale.store');
+Route::get('/locale/current', [LocaleController::class, 'currentLocale'])->name('locale.current');
+

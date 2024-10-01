@@ -45,7 +45,6 @@ function formatDate(date) {
     return `${day}/${month}/${year}`;
 }
 
-
 const today = new Date();
 const yesterday = new Date(today);
 yesterday.setDate(today.getDate() - 1);
@@ -63,8 +62,6 @@ const defaultDates = [
     {'date':yesterday, 'formated_date':yesterdayDate, label:'yesterday'},
     {'date':twoDaysAgo, 'formated_date':twoDaysAgoDate, label:'2 days ago'},
 ];
-
-
 
 import moment from 'moment';
 import PrimaryButton from "../../Components/PrimaryButton.vue";
@@ -92,22 +89,19 @@ function compareDates(date1, date2){
                 <div class="relative">
                     <XMarkIcon @click="emits('close-dialog')" class="icon right-position"/>
                 </div>
-                <DialogTitle class="dialog-title">Add new transaction</DialogTitle>
+                <DialogTitle class="dialog-title">{{$t('Add new transaction')}}</DialogTitle>
                 <form @submit.prevent="savePayment">
-
-                    <FormRow name="amount" label="Amount">
+                    <FormRow name="amount" :label="$t('Amount')">
                         <input  class="form-control" required type="text" v-model="paymentForm.amount">
                         <Errors v-if="errors" :errors="errors.amount"/>
                     </FormRow>
 
-
-                    <FormRow name="description" label="Description">
+                    <FormRow name="description" :label="$t('Description')">
                         <textarea id="description" name="description" placeholder="Description" class="form-control" v-model="paymentForm.description"></textarea>
                     </FormRow>
 
-                    <FormRow name="date" label="Date">
+                    <FormRow name="date" :label="$t('Date')">
                         <div class="flex justify-between gap-8">
-
                             <div class="flex flex-col w-1/2 gap-2">
                                 <div @click="setPaymentDate(date.date)" :key="date.date" v-for="date in defaultDates"
                                      class="cursor-pointer text-center p-1 w-full"  :class="{'active-date': compareDates(paymentForm.payment_date, date.date)}">
@@ -122,13 +116,10 @@ function compareDates(date1, date2){
                             <div>
                                 <VueDatePicker format="dd/MM/yyyy" class="w-full small-datepicker" :enable-time-picker="false" v-model="paymentForm.payment_date"></VueDatePicker>
                             </div>
-
-
                         </div>
-
                     </FormRow>
 
-                    <FormRow name="categories" label="Categories">
+                    <FormRow name="categories" :label="$t('Categories')">
                         <div class="flex flex-row flex-wrap gap-4">
                             <div @click="setCategory(category.id)" :key="category.id" v-for="category in categories">
                                 <div :style="{ backgroundColor: activeCategory === category.id ? category.icon.color : ''}"
@@ -146,12 +137,10 @@ function compareDates(date1, date2){
                     </FormRow>
 
                     <div class="flex">
-                        <PrimaryButton class="ml-auto" type="submit">ADD</PrimaryButton>
+                        <PrimaryButton class="ml-auto" type="submit">{{$t('ADD')}}</PrimaryButton>
                     </div>
-
                 </form>
             </DialogPanel>
         </div>
     </Dialog>
-
 </template>

@@ -33,32 +33,32 @@ const register = async () => {
 };
 </script>
 <template>
-    <FormCard header="Register new account">
+    <FormCard :header="$t('Register new account')">
         <form @submit.prevent="register" class="space-y-6" action="#" method="POST">
             <FormDiv>
-                <template #label><Label name="name">Name</Label></template>
+                <template #label><Label name="name">{{$t('Name')}}</Label></template>
                 <input v-model="form.name" id="name" name="name" type="text"  required=""/>
                 <Errors v-if="errors"  :errors="errors.name"/>
             </FormDiv>
 
             <FormDiv>
-                <template #label><Label name="email">Email</Label></template>
+                <template #label><Label name="email">{{$t('Email')}}</Label></template>
                 <input v-model="form.email" id="email" name="email" type="email" autocomplete="email" required=""/>
                 <Errors v-if="errors"  :errors="errors.email"/>
             </FormDiv>
 
             <FormDiv>
-                <template #label><Label name="password">Password</Label></template>
+                <template #label><Label name="password">{{$t('Password')}}</Label></template>
                 <input v-model="form.password" id="password" name="password" type="password" autocomplete="current-password" required=""/>
             </FormDiv>
 
             <FormDiv>
-                <template #label><Label name="password_confirmation">Confirm Password</Label></template>
+                <template #label><Label name="password_confirmation">{{$t('Confirm Password')}}</Label></template>
                 <input v-model="form.password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required="" />
             </FormDiv>
 
             <div class="text-right">
-                <PrimaryButton>Register</PrimaryButton>
+                <PrimaryButton>{{$t('Register')}}</PrimaryButton>
             </div>
         </form>
     </FormCard>

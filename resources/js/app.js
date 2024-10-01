@@ -35,6 +35,10 @@ import "vue-toastification/dist/index.css";
 import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import { Ziggy } from './ziggy';
 
+import i18n from './i18n/index'; // import your i18n instance
+import { i18nVue } from 'laravel-vue-i18n';
+
+
 const app = createApp(App)
 .use(Toast, {
         toastClassName:'custom-toast'
@@ -43,6 +47,7 @@ const app = createApp(App)
 .use(store)
 .use(Ziggy)
 .use(LaravelPermissionToVueJS)
+.use(i18n)
 
 app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$Oauth = Oauth;
