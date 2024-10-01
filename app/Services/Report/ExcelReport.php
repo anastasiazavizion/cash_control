@@ -16,7 +16,7 @@ class ExcelReport extends  AbstactReport implements ReportServiceContract
     public function createReport(User|Authenticatable $user)
     {
         $path = $this->getPath($this->directory, 'xlsx');
-        Excel::store(new PaymentExport(), $path, 's3');
+        Excel::store(new PaymentExport($user), $path, 's3');
         return  $path;
     }
 }
