@@ -82,7 +82,6 @@ router.beforeEach(async (to, from, next) => {
         if (allow) {
             next()
         } else {
-            console.log('not allow');
             await store.dispatch('auth/logout')
             next({name: "login"})
         }

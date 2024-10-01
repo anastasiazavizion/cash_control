@@ -14,8 +14,6 @@ const getters = {
 
 const mutations = {
     SET_AUTHENTICATED (state, value) {
-        console.log('SET_AUTHENTICATED');
-        console.log(value);
         state.authenticated = value;
     },
     SET_USER (state, value) {
@@ -28,7 +26,6 @@ const mutations = {
 
 const actions = {
     async login({ commit, dispatch}, payload) {
-        console.log('login action');
         try {
             await axios.post(route('login'), payload);
             commit('setErrors', []);
