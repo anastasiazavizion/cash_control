@@ -14,6 +14,6 @@ class RegisteredUserController
     {
         $user = User::create($request->validated());
         Auth::login($user);
-        return response()->json(['message' => 'OK'], 200);
+        return response()->json('OK', 200);
     }
 }

@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index.js";
 
-import Home from "../Pages/Home.vue";
-import Login from "../Pages/Auth/Login.vue";
-import Register from "../Pages/Auth/Register.vue";
-import Settings from "../Pages/Account/Settings.vue";
+import Home from "@/Pages/Home.vue";
+import Login from "@/Pages/Auth/Login.vue";
+import Register from "@/Pages/Auth/Register.vue";
+import Settings from "@/Pages/Account/Settings.vue";
 
 const routes = [
     {
@@ -54,31 +54,36 @@ const router =  createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const middleware = to.meta.middleware;
     const permissions = window.Laravel.jsPermissions;
     const roles = permissions['roles'];
     const permission = permissions['permissions'];
-    if(middleware === "guest" || middleware === undefined){
+    if (middleware === "guest" || middleware === undefined) {
         next()
-    }else{
+    } else {
         let allow = true;
-        for(let rule of middleware){
-            if(rule.includes('can:')){
-                allow = permission.includes(rule.replace('can:',''));
-            }else if(rule === 'auth'){
+        for (let rule of middleware) {
+            if (rule.includes('can:')) {
+                allow = permission.includes(rule.replace('can:', ''));
+            } else if (rule === 'auth') {
+                console.log('authenticated=');
+                console.log(store.getters['auth/authenticated']);
+
                 allow = store.getters['auth/authenticated'];
-            }else{
+            } else {
                 allow = roles.includes(rule);
             }
-            if(!allow){
+            if (!allow) {
                 break;
             }
         }
-        if(allow){
+
+        if (allow) {
             next()
-        }else{
-            next({name:"login"})
+        } else {
+            await store.dispatch('auth/logout')
+            next({name: "login"})
         }
     }
 })

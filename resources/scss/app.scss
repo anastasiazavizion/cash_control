@@ -64,8 +64,7 @@
     }
 
     .primary-btn {
-        @apply inline-flex text-center justify-center  px-4 py-2 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest
-        focus:outline-none  transition ease-in-out duration-150;
+        @apply items-center px-4 py-2 rounded-md text-xs font-semibold uppercase;
         @extend .main-color;
     }
 

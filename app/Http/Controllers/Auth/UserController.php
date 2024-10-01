@@ -10,6 +10,7 @@ class UserController
 {
     public function user(Request $request)
     {
-        return response()->json(['user'=>new CurrentUserResource($request->user())]);
+        $user = $request->user();
+        return response()->json(['user'=>new CurrentUserResource($user), 'permissions'=>$user->jsPermissions()]);
     }
 }

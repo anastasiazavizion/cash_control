@@ -120,17 +120,19 @@ function saveVisibleCategories(categories) {
 }
 
 function makeReport(type) {
-    axios.get('/report', {
+    axios.get(route('report'), {
         params: {type: type},
         responseType: 'blob'
     }).then(response => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'report.' + type);
-        document.body.appendChild(link);
-        link.click();
-        link.remove(); // Clean up the DOM after download
+        if(response.data){
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'report.' + type);
+            document.body.appendChild(link);
+            link.click();
+            link.remove(); // Clean up the DOM after download
+        }
     }).catch(error => {
         alert('There was an error downloading the file!', error);
     });

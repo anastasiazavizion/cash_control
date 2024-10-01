@@ -2,18 +2,20 @@
 
 namespace App\Services\Report;
 
+use App\Models\User;
 use App\Services\Report\Contracts\ReportServiceContract;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Storage;
 
 class PdfReport extends  AbstactReport implements ReportServiceContract
 {
     private string $directory = 'reports/pdf';
+    public string $type = 'application/pdf';
 
-    public function createReport()
+    public function createReport(User|Authenticatable $user)
     {
-        $groupedPaymentsByCategory = Auth::user()->payments()
+        $groupedPaymentsByCategory = $user->payments()
             ->with('category.icon')
             ->latest()
             ->get()
@@ -32,13 +34,13 @@ class PdfReport extends  AbstactReport implements ReportServiceContract
 
         $data = $sortedData->values()->toArray();
 
-        $this->makeDir($this->directory);
-
         $pdf = PDF::loadView('report.payments', ['data'=>$data]);
 
         $path = $this->getPath($this->directory, 'pdf');
 
         Storage::put($path, $pdf->output());
+        Storage::setVisibility($path, 'public');
+
         return $path;
     }
 }

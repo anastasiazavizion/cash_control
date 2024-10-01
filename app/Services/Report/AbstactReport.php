@@ -1,9 +1,6 @@
 <?php
 namespace App\Services\Report;
 
-use App\Services\Report\Contracts\ReportServiceContract;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 abstract class AbstactReport
