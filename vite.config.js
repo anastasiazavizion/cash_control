@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue'
 import i18n from 'laravel-vue-i18n/vite';
 
 export default defineConfig({
+    build: {
+        target: 'esnext' //browsers can handle the latest ES features
+    },
     server: {
         port: '5177'
     },
