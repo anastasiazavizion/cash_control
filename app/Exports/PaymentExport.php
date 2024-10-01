@@ -5,9 +5,16 @@ namespace App\Exports;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Style;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 
-class PaymentExport implements FromCollection, WithHeadings
+class PaymentExport implements FromCollection, WithHeadings, ShouldAutoSize,WithStyles,WithDefaultStyles
 {
 
     public function __construct(public User|Authenticatable $user)
@@ -35,5 +42,19 @@ class PaymentExport implements FromCollection, WithHeadings
                 'category'=>$payment->category->name,
             ];
         });
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true]],
+        ];
+    }
+
+    public function defaultStyles(Style $defaultStyle)
+    {
+        // Configure the default styles
+        return $defaultStyle->getFont()->setSize(13);
+
     }
 }
