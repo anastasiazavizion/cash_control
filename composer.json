@@ -8,6 +8,7 @@
         "php": "^8.2",
         "ahmedsaoud31/laravel-permission-to-vuejs": "dev-master",
         "barryvdh/laravel-dompdf": "^3.0",
+        "fakerphp/faker": "^1.23",
         "guzzlehttp/guzzle": "^7.9",
         "hyvor/php-svg-icons": "*",
         "laravel/framework": "^11.9",
@@ -25,7 +26,6 @@
         "tightenco/ziggy": "^2.3"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
