@@ -2269,3 +2269,5 @@
   2024-10-01 12:56:29 App\Events\PaymentPerDayLimitEvent ....... 547.68ms DONE
   2024-10-01 13:00:13 App\Events\PaymentPerDayLimitEvent ............. RUNNING
   2024-10-01 13:00:13 App\Events\PaymentPerDayLimitEvent ....... 519.08ms DONE
+  2024-10-03 16:20:15 App\Listeners\NewUserRegisteredNotification .... RUNNING
+  2024-10-03 16:20:17 App\Listeners\NewUserRegisteredNotification .... 1s DONE

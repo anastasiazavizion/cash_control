@@ -11,18 +11,18 @@ import UniversalSocialauth from 'universal-social-auth';
 const options = {
     providers: {
         google: {
-            clientId: '976566120631-43ed403u1stn13kbj5gcectmko0fnr78.apps.googleusercontent.com',
-            redirectUri: 'http://localhost:8097/api/auth/google/callback'
+            clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            redirectUri: import.meta.env.VITE_GOOGLE_REDIRECT_URL
         },
 
         github: {
-            clientId: 'Ov23lijwCeMFb7HjYrYy',
-            redirectUri: 'http://localhost:8097/api/auth/github/callback'
+            clientId: import.meta.env.VITE_GITHUB_CLIENT_ID,
+            redirectUri: import.meta.env.VITE_GITHUB_REDIRECT_URI
         },
 
         facebook: {
-            clientId: '1897919367389385',
-            redirectUri: 'http://localhost:8097/api/auth/facebook/callback'
+            clientId: import.meta.env.VITE_FACEBOOK_CLIENT_ID,
+            redirectUri: import.meta.env.VITE_FACEBOOK_REDIRECT_URI
         },
     }
 };
@@ -36,8 +36,6 @@ import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import { Ziggy } from './ziggy';
 
 import i18n from './i18n/index'; // import your i18n instance
-import { i18nVue } from 'laravel-vue-i18n';
-
 
 const app = createApp(App)
 .use(Toast, {
