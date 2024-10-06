@@ -14,7 +14,7 @@ class AuthController
             'password' => ['required'],
         ]);
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            session()->regenerate();
             return response()->json('Authenticated', 200);
         }
         return response()->json('Unauthorized', 403);
@@ -23,8 +23,8 @@ class AuthController
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        session()->invalidate();
+        session()->regenerateToken();
         return response()->json('Logout', 200);
     }
 }
