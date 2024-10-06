@@ -9,8 +9,7 @@ use \Illuminate\Foundation\Testing\RefreshDatabase;
 
 trait SetupTrait{
 
-   // use RefreshDatabase;
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
