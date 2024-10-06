@@ -19,7 +19,8 @@ abstract class ReportService
             'Content-Type' => $this->getReportService()->type,
             'Content-Description' => 'File Transfer',
             'Content-Disposition' => "attachment; filename=report",
-            'filename'=> 'report'
+            'filename'=> 'report',
+            'path'=> $path,
         ];
         return response($file, 200, $headers);
     }

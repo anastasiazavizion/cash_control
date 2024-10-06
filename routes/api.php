@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function (){
 
     Route::get('report', ReportController::class)->name('report');
 
-    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('category', CategoryController::class)->only(['index']);
     Route::apiResource('payment', PaymentController::class);
 
 
