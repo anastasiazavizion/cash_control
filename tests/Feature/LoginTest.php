@@ -36,6 +36,8 @@ class LoginTest extends TestCase
      */
     public function test_login_with_not_correct_data(): void
     {
+        Notification::fake();
+
         $password = 'password';
         $user = User::factory()->create([
             'password' => $password
