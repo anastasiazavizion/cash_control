@@ -14,6 +14,7 @@ use App\Http\Controllers\UserSettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
 
+
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/user', [UserController::class, 'user'])->name('user');
 

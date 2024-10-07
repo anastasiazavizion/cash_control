@@ -1,6 +1,6 @@
 <script setup>
 import {useStore} from 'vuex'
-import {computed, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import {useRouter} from "vue-router";
 import Errors from "@/Components/Errors.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -31,30 +31,35 @@ const register = async () => {
         await router.push('/home');
     }
 };
+
+onMounted(()=>{
+    store.dispatch('auth/clearErrors');
+});
 </script>
 <template>
     <FormCard :header="$t('Register new account')">
         <form @submit.prevent="register" class="space-y-6" action="#" method="POST">
             <FormDiv>
                 <template #label><Label name="name">{{$t('Name')}}</Label></template>
-                <input v-model="form.name" id="name" name="name" type="text"  required=""/>
+                <input v-model="form.name" id="name" name="name" type="text"/>
                 <Errors v-if="errors"  :errors="errors.name"/>
             </FormDiv>
 
             <FormDiv>
                 <template #label><Label name="email">{{$t('Email')}}</Label></template>
-                <input v-model="form.email" id="email" name="email" type="email" autocomplete="email" required=""/>
-                <Errors v-if="errors"  :errors="errors.email"/>
+                <input v-model="form.email" id="email" name="email" type="email" autocomplete="email"/>
+                <Errors v-if="errors" :errors="errors.email"/>
             </FormDiv>
 
             <FormDiv>
                 <template #label><Label name="password">{{$t('Password')}}</Label></template>
-                <input v-model="form.password" id="password" name="password" type="password" autocomplete="current-password" required=""/>
+                <input v-model="form.password" id="password" name="password" type="password" autocomplete="current-password"/>
+                <Errors v-if="errors" :errors="errors.password"/>
             </FormDiv>
 
             <FormDiv>
                 <template #label><Label name="password_confirmation">{{$t('Confirm Password')}}</Label></template>
-                <input v-model="form.password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required="" />
+                <input v-model="form.password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" />
             </FormDiv>
 
             <div class="text-right">
