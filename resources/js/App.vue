@@ -116,9 +116,6 @@ const showRate = ref(false);
                     </div>
                 </div>
 
-
-
-
                 <div class="absolute inset-y-0 right-0 flex gap-4 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <ExchangeRate class="hidden sm:inline text-white"></ExchangeRate>
                     <InformationCircleIcon @click="showRate = true" class="sm:hidden text-white h-8 cursor-pointer"></InformationCircleIcon>
