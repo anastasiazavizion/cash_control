@@ -1,10 +1,11 @@
 <script setup>
 defineProps({
-    errors:Array
+    errors: Array
 })
+
 </script>
 <template>
-<div class="text-red-600 font-bold" v-for="error in errors">
-    {{error}}
-</div>
+    <div class="text-red-600 font-bold" v-for="error in errors">
+        {{ error }}
+    </div>
 </template>

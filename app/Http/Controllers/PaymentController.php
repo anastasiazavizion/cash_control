@@ -20,26 +20,18 @@ class PaymentController extends Controller
 
     public function getTotalSum(TotalSumRequest $request)
     {
-        return response()->json($this->paymentRepository->getTotalSum($request->validated()));
+        return response()->json($this->paymentRepository->getTotalSum(Auth::user(),$request->validated()));
     }
 
     public function getPaymentsByType(PaymentByTypeRequest $request)
     {
         $data = $request->validated();
 
-        $total = $this->paymentRepository->getTotalByPaymentType($data);
+        $total = $this->paymentRepository->getTotalByPaymentType(Auth::user(),$data);
 
-        $categories = $this->paymentRepository->getCategoriesData($total,$data);
+        $categories = $this->paymentRepository->getCategoriesData(Auth::user(),$total,$data);
 
         return response()->json(['total'=>$total, 'categories'=>CategoryResource::collection($categories)], 200);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-
     }
 
     /**
@@ -51,14 +43,6 @@ class PaymentController extends Controller
             return response()->json(['message'=>'Payment was added', 'data'=> new PaymentResource($payment)], 200);
         }
         return response()->json('Error', 500);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**

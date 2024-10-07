@@ -14,6 +14,7 @@ use App\Http\Controllers\UserSettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
 
+
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/user', [UserController::class, 'user'])->name('user');
 
@@ -22,18 +23,15 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('report', ReportController::class)->name('report');
 
     Route::apiResource('category', CategoryController::class)->only(['index']);
-    Route::apiResource('payment', PaymentController::class);
-
+    Route::apiResource('payment', PaymentController::class)->only(['store','destroy']);
 
     Route::get('/totalSum', [PaymentController::class, 'getTotalSum'])->name('payment.totalSum');
     Route::get('/paymentsByType', [PaymentController::class, 'getPaymentsByType'])->name('payment.getPaymentsByType');
-
 
     Route::get('paymentType', PaymentTypeController::class)->name('paymentType');
 
     Route::apiResource('user_setting', UserSettingController::class)->only(['index', 'store']);
 });
-
 
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
@@ -46,8 +44,6 @@ Route::post('/auth/{provider}/callback', [SocialAuthController::class, 'handlePr
 
 Route::get('exchangeRate', ExchangeRateController::class)->name('exchangeRate');
 
-
-
 Route::get('language/{locale}', function ($locale) {
     app()->setLocale($locale);
     session()->put('locale', $locale);
@@ -58,4 +54,3 @@ Route::get('language/{locale}', function ($locale) {
 Route::get('/locale/translations', [LocaleController::class, 'translations'])->name('locale.translations');
 Route::post('/locale/{locale}', [LocaleController::class, 'store'])->name('locale.store');
 Route::get('/locale/current', [LocaleController::class, 'currentLocale'])->name('locale.current');
-

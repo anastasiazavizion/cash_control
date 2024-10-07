@@ -3,6 +3,11 @@ import * as HeroIcons from "@heroicons/vue/24/solid/index.js";
 import {XMarkIcon} from "@heroicons/vue/24/solid";
 import {ref} from "vue";
 import Price from "@/Components/Price.vue";
+import swal from 'sweetalert';
+
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n();
 
 const props = defineProps({
     categories: Array,
@@ -23,8 +28,18 @@ function showPayments(id) {
     emits('save-visible-categories', visibleCategories.value);
 }
 
-function removePayment(id) {
-    emits('remove-payment', id);
+async function removePayment(id) {
+    swal({
+        title: t('Are you sure') + '?',
+        text: t('Are you sure that you want to delete this payment')+'?',
+        icon: "warning",
+        dangerMode: true,
+    })
+        .then(willDelete => {
+            if (willDelete) {
+                emits('remove-payment', id);
+            }
+        });
 }
 
 function isVisibleCategory(id) {

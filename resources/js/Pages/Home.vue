@@ -32,7 +32,6 @@ const paymentTypes = computed(() => {
     });
 })
 
-
 const total = computed(() => {
     return store.getters['payment/total'];
 })

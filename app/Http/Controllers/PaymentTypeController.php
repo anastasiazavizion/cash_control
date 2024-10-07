@@ -12,7 +12,6 @@ class PaymentTypeController extends Controller
      */
     public function __invoke(Request $request)
     {
-       logs()->info(PaymentType::all());
        return response()->json(PaymentType::all());
     }
 }

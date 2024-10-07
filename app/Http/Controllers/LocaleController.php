@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
+
 class LocaleController extends Controller
 {
     public function translations(): JsonResponse
@@ -21,7 +23,8 @@ class LocaleController extends Controller
 
     public function store(string $locale): JsonResponse
     {
-        app()->setLocale($locale);
+        session()->put('test','bbb');
+        App::setLocale($locale);
         session()->put('locale', $locale);
         return response()->json($locale);
     }

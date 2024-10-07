@@ -67,6 +67,9 @@ class Payment extends Model
             })
             ->when(isset($filters['date_to']), function ($query) use ($filters) {
                 return $query->where('payment_date', '<=', $filters['date_to']);
+            })
+            ->when(isset($filters['user_id']), function ($query) use ($filters) {
+                return $query->where('user_id', $filters['user_id']);
             });
     }
 

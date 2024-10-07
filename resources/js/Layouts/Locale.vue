@@ -1,19 +1,19 @@
 <script setup>
 import {useI18n} from 'vue-i18n';
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 const {locale, t} = useI18n();
 
 const currentValue = ref(locale.value);
+
+const router = useRouter();
 
 const changeLocale = (newLocale) => {
     locale.value = newLocale;
     currentValue.value = newLocale;
     document.documentElement.lang = newLocale;
     axios.post(route('locale.store', {locale: newLocale}))
-        .then(response => {
-            console.log(response.data);
-        })
         .catch(error => {
             console.error(error);
         });
