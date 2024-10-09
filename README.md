@@ -5,18 +5,18 @@
 <h2>Features</h2>
 <ul>
     <li><strong>User Authentication</strong>: Secure sign-up and login: default login, via Google or GitHub</li>
-    <li><strong>Add Payments (Income or Expenses)</strong>: Each payment has a date and category.</li>
+    <li><strong>Add Payments (Income or Expenses)</strong>: Each payment has a date and category</li>
     <li><strong>Statistics</strong>: Users can see payment statistics.</li>
-    <li><strong>Real-time Notifications</strong>: Users can set limits and receive real-time notifications if the limits are exceeded.</li>
-    <li><strong>Responsive Design</strong>: Accessible on both desktop and mobile devices.</li>
+    <li><strong>Real-time Notifications</strong>: Users can set limits and receive real-time notifications if the limits are exceeded</li>
+    <li><strong>Responsive Design</strong>: Accessible on both desktop and mobile devices</li>
     <li><strong>Multilanguage Interface</strong></li>
     <li><strong>Slack notification:</strong> After each new user registers, a notification will be sent to the Slack channel</li>
 </ul>
 
 <h2>Technologies Used</h2>
 <ul>
-    <li><strong>Frontend</strong>: Vue.js, Tailwind CSS, SASS</li>
-    <li><strong>Backend</strong>: Laravel</li>
+    <li><strong>Frontend</strong>: Vue.js, Vuex, HTML, CSS, Tailwind CSS, SASS</li>
+    <li><strong>Backend</strong>: PHP, Laravel</li>
     <li><strong>Database</strong>: MySQL/PostgreSQL</li>
     <li><strong>Caching, Queue</strong>: Redis</li>
     <li><strong>Cloud Storage</strong>: AWS S3</li>
@@ -59,10 +59,6 @@
 
 <h2>Contributing</h2>
 <p>Contributions are welcome! Please open an issue or submit a pull request for any changes you'd like to suggest.</p>
-
-<h2>License</h2>
-<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
-
 
 ![Screenshot from 2024-10-09 15-58-46](https://github.com/user-attachments/assets/5af87853-5b79-44e8-af1e-e1ce5c037134)
 ![Screenshot from 2024-10-09 16-00-04](https://github.com/user-attachments/assets/7a79622a-2f5f-4ac7-af00-b5fb48349e82)
