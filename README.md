@@ -1,29 +1,32 @@
 <h1>Cash Control</h1>
 
-<p><strong>Cash Control</strong> is a web application designed to help users manage their finances efficiently. Built using modern technologies, it offers features such as budget tracking, expense management, and financial reporting. The application aims to provide a user-friendly interface and secure experience for both individuals and small businesses.</p>
+<p><strong>Cash Control</strong> is a web application designed to help users manage their finances efficiently. User can manage his income and expenses. Also user has abbility to create PDF and Excel reports.
+</p>
 
 <h2>Features</h2>
 <ul>
-    <li><strong>User Authentication</strong>: Secure sign-up and login via Google, GitHub</li>
-    <li><strong>Budget Tracking</strong>: Easily set and monitor budgets to manage spending.</li>
-    <li><strong>Expense Management</strong>: Add, edit, and categorize expenses for better insights.</li>
-    <li><strong>Real-time Notifications</strong>: Get updates on your financial activities.</li>
+    <li><strong>User Authentication</strong>: Secure sign-up and login: default login, via Google or GitHub</li>
+    <li><strong>Add payments (income or expenses)</strong>: each payment has date and category.</li>
+    <li><strong>Statistic</strong>: User can see payments statistic</li>
+    <li><strong>Real-time Notifications</strong>: user can set limits and see real-time notifications if the limits are exceeded</li>
     <li><strong>Responsive Design</strong>: Accessible on both desktop and mobile devices.</li>
+    <li><strong>Multilanguage interface</strong></li>
 </ul>
 
 <h2>Technologies Used</h2>
 <ul>
-    <li><strong>Frontend</strong>: Vue.js, Vite</li>
+    <li><strong>Frontend</strong>: Vue.js</li>
     <li><strong>Backend</strong>: Laravel</li>
-    <li><strong>Database</strong>: MySQL</li>
-    <li><strong>Caching</strong>: Redis</li>
+    <li><strong>Database</strong>: MySQL/Postgresql</li>
+    <li><strong>Caching, Queue</strong>: Redis</li>
     <li><strong>Cloud Storage</strong>: AWS S3</li>
     <li><strong>Real-time Communication</strong>: Pusher</li>
+    <li><strong>Libraries</strong>: Chart.js, i18n</li>
 </ul>
 
 <h2>Getting Started</h2>
 <p>To get started with the project:</p>
-<ol>
+<ul>
     <li>Clone the repository:
         <pre><code>git clone git@github.com:anastasiazavizion/cash_control.git</code></pre>
     </li>
@@ -59,7 +62,6 @@
         <pre><code>npm run dev</code></pre>
     </li>
     
-
     <li>Generate the application key:
         <pre><code>php artisan key:generate</code></pre>
     </li>
@@ -70,7 +72,7 @@
     <li>Run the application:
         <pre>Go to APP_URL:APP_PORT url, for example http://localhost:8097</pre>
     </li>
-</ol>
+</ul>
 
 <h2>Contributing</h2>
 <p>Contributions are welcome! Please open an issue or submit a pull request for any changes you'd like to suggest.</p>
