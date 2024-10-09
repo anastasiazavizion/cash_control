@@ -10,6 +10,7 @@
     <li><strong>Real-time Notifications</strong>: Users can set limits and receive real-time notifications if the limits are exceeded.</li>
     <li><strong>Responsive Design</strong>: Accessible on both desktop and mobile devices.</li>
     <li><strong>Multilanguage Interface</strong></li>
+    <li><strong>Slack notification:</strong> After each new user registration there will be a notification to slack channel</li>
 </ul>
 
 <h2>Technologies Used</h2>
@@ -21,6 +22,7 @@
     <li><strong>Cloud Storage</strong>: AWS S3</li>
     <li><strong>Real-time Communication</strong>: Pusher</li>
     <li><strong>Libraries</strong>: Chart.js, i18n</li>
+    <li><strong>Notifications:</strong> Email (Gmail server, Slack)</li>
 </ul>
 
 <h2>Getting Started</h2>
