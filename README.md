@@ -10,7 +10,7 @@
     <li><strong>Real-time Notifications</strong>: Users can set limits and receive real-time notifications if the limits are exceeded.</li>
     <li><strong>Responsive Design</strong>: Accessible on both desktop and mobile devices.</li>
     <li><strong>Multilanguage Interface</strong></li>
-    <li><strong>Slack notification:</strong> After each new user registration there will be a notification to slack channel</li>
+    <li><strong>Slack notification:</strong> After each new user registers, a notification will be sent to the Slack channel</li>
 </ul>
 
 <h2>Technologies Used</h2>
