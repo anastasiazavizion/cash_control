@@ -1,23 +1,22 @@
 <h1>Cash Control</h1>
 
-<p><strong>Cash Control</strong> is a web application designed to help users manage their finances efficiently. User can manage his income and expenses. Also user has abbility to create PDF and Excel reports.
-</p>
+<p><strong>Cash Control</strong> is a web application designed to help users manage their finances efficiently. Users can manage their income and expenses, and also generate PDF and Excel reports.</p>
 
 <h2>Features</h2>
 <ul>
     <li><strong>User Authentication</strong>: Secure sign-up and login: default login, via Google or GitHub</li>
-    <li><strong>Add payments (income or expenses)</strong>: each payment has date and category.</li>
-    <li><strong>Statistic</strong>: User can see payments statistic</li>
-    <li><strong>Real-time Notifications</strong>: user can set limits and see real-time notifications if the limits are exceeded</li>
+    <li><strong>Add Payments (Income or Expenses)</strong>: Each payment has a date and category.</li>
+    <li><strong>Statistics</strong>: Users can see payment statistics.</li>
+    <li><strong>Real-time Notifications</strong>: Users can set limits and receive real-time notifications if the limits are exceeded.</li>
     <li><strong>Responsive Design</strong>: Accessible on both desktop and mobile devices.</li>
-    <li><strong>Multilanguage interface</strong></li>
+    <li><strong>Multilanguage Interface</strong></li>
 </ul>
 
 <h2>Technologies Used</h2>
 <ul>
     <li><strong>Frontend</strong>: Vue.js</li>
     <li><strong>Backend</strong>: Laravel</li>
-    <li><strong>Database</strong>: MySQL/Postgresql</li>
+    <li><strong>Database</strong>: MySQL/PostgreSQL</li>
     <li><strong>Caching, Queue</strong>: Redis</li>
     <li><strong>Cloud Storage</strong>: AWS S3</li>
     <li><strong>Real-time Communication</strong>: Pusher</li>
@@ -30,48 +29,30 @@
     <li>Clone the repository:
         <pre><code>git clone git@github.com:anastasiazavizion/cash_control.git</code></pre>
     </li>
-
- <li>Be sure that you have docker on your machine:
-        <pre><code>git clone git@github.com:anastasiazavizion/cash_control.git</code></pre>
-    </li>
-
-     <li>Be sure that you have docker on your machine:
-        <pre><code>git clone git@github.com:anastasiazavizion/cash_control.git</code></pre>
-    </li>
-
-
+    <li>Make sure Docker is installed on your machine.</li>
     <li>Navigate to the project directory:
         <pre><code>cd cash-control</code></pre>
     </li>
-    
     <li>Set up your .env file:
         <pre><code>cp .env.example .env</code></pre>
     </li>
-
-    <li>Cinfigure necessary keys in your.env file:
-        <pre><code>cp .env.example .env</code></pre>
-    </li>
-    
+    <li>Configure necessary keys in your .env file.</li>
     <li>Install dependencies:
-        <pre><code>composer install --ignore-platform-req=ext-gd</code>code></pre>
-        bash ./vendor/laravel/sail/bin/sail up
-        <pre><code>sail up -d</code></pre>
+        <pre><code>composer install --ignore-platform-req=ext-gd</code></pre>
+        <pre><code>./vendor/laravel/sail/bin/sail up -d</code></pre>
         <pre><code>sail bash</code></pre>
         <pre><code>composer update</code></pre>
         <pre><code>npm install</code></pre>
         <pre><code>npm run dev</code></pre>
     </li>
-    
     <li>Generate the application key:
         <pre><code>php artisan key:generate</code></pre>
     </li>
     <li>Migrate the database and run seeds:
         <pre><code>php artisan migrate --seed</code></pre>
     </li>
-    
     <li>Run the application:
-        <pre>Go to APP_URL:APP_PORT url, for example http://localhost:8097</pre>
-    </li>
+        Access the application at <code>http://localhost:8097</code>.</li>
 </ul>
 
 <h2>Contributing</h2>
