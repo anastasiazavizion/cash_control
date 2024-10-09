@@ -60,3 +60,15 @@
 
 <h2>License</h2>
 <p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+
+
+![Screenshot from 2024-10-09 15-58-46](https://github.com/user-attachments/assets/5af87853-5b79-44e8-af1e-e1ce5c037134)
+![Screenshot from 2024-10-09 16-00-04](https://github.com/user-attachments/assets/7a79622a-2f5f-4ac7-af00-b5fb48349e82)
+![Screenshot from 2024-10-09 16-00-23](https://github.com/user-attachments/assets/2eddc4a7-06c1-4cb9-bf3a-15e462cdbbd4)
+![Screenshot from 2024-10-09 16-01-46](https://github.com/user-attachments/assets/2cae000a-840c-4dba-b088-6880e780ee0f)
+![Screenshot from 2024-10-09 16-02-06](https://github.com/user-attachments/assets/d9d5f003-d28e-47bb-b706-d8a0439c4fac)
+![Screenshot from 2024-10-09 16-02-34](https://github.com/user-attachments/assets/d1fce50e-db9d-47d0-8a74-acd91e95077e)
+![Screenshot from 2024-10-09 16-03-11](https://github.com/user-attachments/assets/487ea333-e4ff-46a4-bae9-ac5728b07619)
+![Screenshot from 2024-10-09 16-03-49](https://github.com/user-attachments/assets/25629621-07eb-44e9-b6cb-206b4e6ae84b)
+
+
