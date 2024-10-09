@@ -1,6 +1,8 @@
 <script setup>
 import {computed} from "vue";
 import {Doughnut} from "vue-chartjs";
+import priceFormat from "../../hooks/priceFormat.js";
+import { createDoughnutChart } from '../../hooks/doughnutChart.js'
 
 const props = defineProps({
     paymentsByCategory:Array,
@@ -10,9 +12,6 @@ const props = defineProps({
 const isEmpty = computed(()=>{
     return props.paymentsByCategory.length > 0;
 })
-import priceFormat from "../../hooks/priceFormat.js";
-
-import { createDoughnutChart } from '../../hooks/doughnutChart.js'
 
 const {chartOptions, dataForChart} = createDoughnutChart(props.paymentsByCategory, priceFormat(props.total),'name','total_amount',
     'icon.color');

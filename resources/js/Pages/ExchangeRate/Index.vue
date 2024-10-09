@@ -1,6 +1,7 @@
 <script setup>
 import {computed, onMounted} from "vue";
 import {useStore} from "vuex";
+import {CurrencyEuroIcon, CurrencyDollarIcon} from "@heroicons/vue/24/solid";
 
 const store = useStore();
 
@@ -20,7 +21,6 @@ onMounted(async () => {
         }, 3600000);
     }
 )
-import {CurrencyEuroIcon, CurrencyDollarIcon} from "@heroicons/vue/24/solid";
 
 </script>
 <template>
