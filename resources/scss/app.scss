@@ -166,6 +166,19 @@
     .locale-active{
         border: 1px solid #ffffff;
     }
+
+
+    .menu-items{
+
+        span,a{
+            @apply block px-4 py-2 text-sm text-gray-700;
+        }
+
+    }
+
+    .logo{
+        @apply h-8 w-auto cursor-pointer;
+    }
 }
 
 nav {

@@ -1,42 +1,3 @@
-<template>
-    <FormCard :header="$t('Sign in to your account')">
-        <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
-            <FormDiv>
-                <template #label><Label name="email">{{$t('Email')}}</Label></template>
-                <input v-model="auth.email" id="email" name="email" type="email" autocomplete="email" required=""/>
-                <Errors v-if="errors" :errors="errors.email"/>
-            </FormDiv>
-
-            <FormDiv>
-                <template #label><Label name="password">{{$t('Password')}}</Label></template>
-                <input v-model="auth.password" id="password" name="password" type="password" autocomplete="current-password" required=""/>
-            </FormDiv>
-
-            <div class="text-right">
-                <PrimaryButton>{{$t('Sign in')}}</PrimaryButton>
-            </div>
-
-            <div v-if="errors.auth" class="text-red-600 font-bold">
-                {{$t('Something is wrong')}}
-            </div>
-        </form>
-
-        <div>
-            <button @click="useAuthProvider('google', null)" type="button"
-                    class="social-btn">
-                <GoogleIcon/>
-                {{$t('Continue with Google')}}
-            </button>
-
-            <button @click="useAuthProvider('github', null)" type="button"
-                    class="social-btn">
-                <GithubIcon/>
-                {{$t('Continue with GitHub')}}
-            </button>
-        </div>
-    </FormCard>
-</template>
-
 <script setup>
 import {useStore} from 'vuex'
 import {computed, onMounted, ref} from "vue";
@@ -129,3 +90,41 @@ function useSocialLogin() {
         })
 }
 </script>
+<template>
+    <FormCard :header="$t('Sign in to your account')">
+        <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
+            <FormDiv>
+                <template #label><Label name="email">{{$t('Email')}}</Label></template>
+                <input v-model="auth.email" id="email" name="email" type="email" autocomplete="email" required=""/>
+                <Errors v-if="errors" :errors="errors.email"/>
+            </FormDiv>
+
+            <FormDiv>
+                <template #label><Label name="password">{{$t('Password')}}</Label></template>
+                <input v-model="auth.password" id="password" name="password" type="password" autocomplete="current-password" required=""/>
+            </FormDiv>
+
+            <div class="text-right">
+                <PrimaryButton>{{$t('Sign in')}}</PrimaryButton>
+            </div>
+
+            <div v-if="errors.auth" class="text-red-600 font-bold">
+                {{$t('Something is wrong')}}
+            </div>
+        </form>
+
+        <div>
+            <button @click="useAuthProvider('google', null)" type="button"
+                    class="social-btn">
+                <GoogleIcon/>
+                {{$t('Continue with Google')}}
+            </button>
+
+            <button @click="useAuthProvider('github', null)" type="button"
+                    class="social-btn">
+                <GithubIcon/>
+                {{$t('Continue with GitHub')}}
+            </button>
+        </div>
+    </FormCard>
+</template>

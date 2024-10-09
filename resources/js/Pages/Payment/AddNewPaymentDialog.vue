@@ -2,11 +2,13 @@
 import {Dialog,DialogPanel, DialogTitle} from "@headlessui/vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-
 import * as HeroIcons from "@heroicons/vue/24/solid/index.js";
 import {computed, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import FormRow from "../../Components/FormRow.vue";
+import PrimaryButton from "../../Components/PrimaryButton.vue";
+import Errors from "../../Components/Errors.vue";
+import {XMarkIcon} from "@heroicons/vue/24/solid";
 
 const categories = computed(()=>{
     return store.getters['category/categories'];
@@ -62,11 +64,6 @@ const defaultDates = [
     {'date':yesterday, 'formated_date':yesterdayDate, label:'yesterday'},
     {'date':twoDaysAgo, 'formated_date':twoDaysAgoDate, label:'2 days ago'},
 ];
-
-import moment from 'moment';
-import PrimaryButton from "../../Components/PrimaryButton.vue";
-import Errors from "../../Components/Errors.vue";
-import {XMarkIcon} from "@heroicons/vue/24/solid";
 
 function setCategory(categoryId){
     props.paymentForm.category_id = categoryId;
