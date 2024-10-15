@@ -8,7 +8,7 @@ use App\Services\Report\Contracts\ReportServiceContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ExcelReport extends  AbstactReport implements ReportServiceContract
+class ExcelReport extends  AbstractReport implements ReportServiceContract
 {
     private string $directory = 'reports/excel';
     public string $type = 'application/excel';

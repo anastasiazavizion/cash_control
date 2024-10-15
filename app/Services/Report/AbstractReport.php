@@ -3,7 +3,7 @@ namespace App\Services\Report;
 
 use Illuminate\Support\Facades\Storage;
 
-abstract class AbstactReport
+abstract class AbstractReport
 {
 
     public function makeDir($directory)
@@ -13,7 +13,7 @@ abstract class AbstactReport
         }
     }
 
-    public function getPath($directory, $extension)
+    public function getPath($directory, $extension): string
     {
         return $directory.'/'.'report_' . date('Ymd_His') . ".$extension";
     }

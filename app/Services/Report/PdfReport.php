@@ -8,7 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Storage;
 
-class PdfReport extends  AbstactReport implements ReportServiceContract
+class PdfReport extends  AbstractReport implements ReportServiceContract
 {
     private string $directory = 'reports/pdf';
     public string $type = 'application/pdf';

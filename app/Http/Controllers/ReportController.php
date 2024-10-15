@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Services\Report\Creators\PdfReportService;
 use App\Services\Report\Creators\ReportService;
@@ -10,14 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
-    function makeReport(ReportService $service, User|Authenticatable $user)
+    private function makeReport(ReportService $service, User|Authenticatable $user)
     {
         return $service->report($user);
     }
 
     public function __invoke(ReportRequest $request)
     {
-        $reportType = match ($request->validated()['type']){
+        $reportType = match ($request->validated()['type']) {
           'pdf'=>PdfReportService::class,
            default=>ExcelReportService::class
         };
